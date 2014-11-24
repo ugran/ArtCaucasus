@@ -1,0 +1,34 @@
+Option 2 - Adding an admin attribute
+
+The easiest way of supporting an admin role is to simply add an attribute that can be used to identify administrators.
+
+$ rails generate migration add_admin_to_users admin:boolean
+Add this to the migration:
+
+class AddAdminToUsers < ActiveRecord::Migration
+  def self.up
+    add_column :users, :admin, :boolean, :default => false
+  end
+
+  def self.down
+    remove_column :users, :admin
+  end
+end
+Next, execute the migration script:
+
+$ rake db:migrate
+Now you're able to do identify administrators:
+
+if current_user.admin?
+  # do something
+end
+If the page could potentially not have a current_user set then:
+
+if current_user.try(:admin?)
+  # do something
+end
+With the above way if current_user were nil, then it would still work without raising an undefined method `admin?' for nil:NilClass exception.
+
+The code below can be used to grant admin status to the current user.
+
+current_user.update_attribute :admin, true

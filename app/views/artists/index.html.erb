@@ -1,25 +1,40 @@
-<h1>Listing artists</h1>
+<% if current_user.try(:admin?) %>
+  <%= link_to 'New Artist', new_artist_path, style: "font-weight:bold;" %>
+  <div style='width:100%; border-top:solid; margin-bottom:20px; margin-top:20px;'></div>
+<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div id="container">
+  <% @artists.each do |artist| %>
+    <div class='item panel panel-default'>
+      <%= link_to image_tag(artist.image.url(:thumb)), artist %>
+      <div class="panel-body">
+          <p class='artist-name'><%= artist.name %></p>
+        <div class="actions">
+          <% if current_user.try(:admin?) %>
+          <%= link_to 'Edit', edit_artist_path(artist) %>
+          <%= link_to 'Destroy', artist, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
 
-  <tbody>
-    <% @artists.each do |artist| %>
-      <tr>
-        <td><%= artist.description %></td>
-        <td><%= link_to 'Show', artist %></td>
-        <td><%= link_to 'Edit', edit_artist_path(artist) %></td>
-        <td><%= link_to 'Destroy', artist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Artist', new_artist_path %>
+<script>
+var isotopeLaunch = function(){
+  var $container = $('#container');
+    // init
+    $container.isotope({
+      // options
+      itemSelector: '.item',
+      layoutMode: 'masonry',
+      masonry: {
+        columnWidth: 50,
+        isFitWidth: true
+      }
+    });
+};
+$(document).ready(isotopeLaunch);
+$(window).load(isotopeLaunch);
+$(document).on( 'page:load', isotopeLaunch);
+</script>

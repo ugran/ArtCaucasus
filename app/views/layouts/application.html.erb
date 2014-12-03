@@ -13,10 +13,14 @@
 <div class="container">
 
 	<% flash.each do |name, msg| %>
-     <%= content_tag(:div, msg, class: "alert alert-#{name}") %>
+    <div id="notifications-bar">
+     <%= content_tag(:div, msg) %>
+    </div>
 	<% end %>
 	
-	<%= yield %>
+  <div id="page-after-navbar">
+	 <%= yield %>
+  </div>
 	
 </div>
 

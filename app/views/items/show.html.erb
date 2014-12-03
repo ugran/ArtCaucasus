@@ -1,9 +1,129 @@
-<%= image_tag @item.image.url %>
+<% if current_user.try(:admin?) %>
+	<a href=javascript:void(0) id='show-add-image' style='font-weight:bold; display:inline-block;'>Add Image</a> |
+	<%= link_to 'Edit', edit_item_path(@item) %> |
+	<%= link_to 'Back', items_path %>
+	<div id="add-image">
+		<%= form_for @itemimagebuild, html: { multipart: true } do |f| %>
+		  <% if @itemimagebuild.errors.any? %>
+		    <div id="error_explanation">
+		      <h2><%= pluralize(@itemimagebuild.errors.count, "error") %> prohibited this item from being saved:</h2>
 
-<p>
-  <strong>Description:</strong>
-  <%= @item.description %>
-</p>
+		      <ul>
+		      <% @itemimagebuild.errors.full_messages.each do |message| %>
+		        <li><%= message %></li>
+		      <% end %>
+		      </ul>
+		    </div>
+		  <% end %>
 
-<%= link_to 'Edit', edit_item_path(@item) %> |
-<%= link_to 'Back', items_path %>
+		  <div class="form-group">
+		    <%= f.label :description %><br>
+		    <%= f.text_field :description, class: "form-control" %>
+		  </div>
+
+		  <div class="form-group">
+		    <%= f.label :image %>
+		    <%= f.file_field :image, class: "form-control" %>
+		  </div>
+
+		    <%= f.hidden_field :item_id, :value => @item.id %>
+
+		  <div class="form-group">
+		    <%= f.submit class: "btn btn-primary" %>
+		    <button id='hide-add-image' class='btn btn-default'>Close</button>
+		  </div>
+		<% end %>
+	</div>
+	<div style='width:100%; border-top:solid; margin-bottom:20px; margin-top:20px;'></div>
+	<script>
+	$(document).ready(function(){
+		$('#show-add-image').on('click', function(){
+			$('#add-image').show();
+			$('#show-add-image').hide();
+		});
+		$('#hide-add-image').on('click', function(){
+			$('#add-image').hide();
+			$('#show-add-image').show();
+		});
+	});
+	</script>
+<% end %>
+
+<h3 style='margin-bottom:20px;'>"<%= @item.name %>" by <%= @item.artist.name %> <% if @item.date_of_creation.present? %>, <%= @item.date_of_creation %> <% end %></h3>
+
+<div class='container' oncontextmenu="return false">
+	<div class="row">
+	  <div class="col-md-8">
+	  	<div id='image-place'>
+	  		<%= image_tag @item.image.url(:large), {class: "active", id: @item.name.gsub(/ /,'-')+"-image"} %>
+	  		<% @item.itemimages.each_with_index do |image, index| %>
+	  			<%= image_tag image.image.url(:large), id: index.to_s+"-image", style: "display:none;" %>
+	  		<% end %>
+	  	</div>
+	  	<div id='paramenters'>
+	  		<p id='item-type'><strong>Type:</strong> <%= @item.item_type %></p>
+	  		<p id='item-dimensions'>, <strong>Dimensions:</strong> <%= @item.dimensions %></p>
+	  	</div>
+	  	<% if @item.description.present? %>
+		  	<p id='description'>
+		  		<strong>Description:</strong> <%= @item.description %>
+		  	</p>
+		<% end %>
+		<% if @item.additional_info.present? %>
+			<p id='additional-info'>
+				<strong>Additional info:</strong> <%= @item.additional_info %>
+			</p>
+		<% end %>
+	  </div>
+	  <div class="col-md-4">
+	  	<p style='font-weight:bold;'>Choose Images:</p>
+	  	<div class='choose-image' id='<%= @item.name.gsub(/ /,"-")+"-show" %>'>
+	  		<%= image_tag @item.image.url(:small) %>
+	  	</div>
+		<% if @item.itemimages.present? %>
+			<% @item.itemimages.each_with_index do |image, index| %>
+				<div class='choose-image' id='<%= index %>-show'>
+					<%= image_tag image.image.url(:small) %>
+				</div>
+			<% end %>
+		<% end %>
+		<% if @item.price.present? %>
+			<div id='price-place'>
+				<p style='display:inline-block; font-size:200%; font-weight:bold; margin-bottom:0;'>Price:</p>
+				<p style='display:inline-block; font-size:200%; font-weight:bold; margin-left:10px; margin-bottom:0;'><%= number_to_currency(@item.price) %></p>
+				<p style='display:inline-block; font-size:200%; font-weight:bold; margin-left:3px; margin-bottom:0;'>$</p>
+				<div style='margin:0; height:1px; width:100%; border-top:solid; border-width:1px;'></div>
+				<% if @item.quantity.present? %>
+					<p style='display:block; font-size:120%; margin-top:2px; margin-bottom:5px;'><strong>Quantity:</strong> <%= @item.quantity %></p>
+				<% end %>
+				<div style='margin:0; height:1px; width:100%; border-top:solid; border-width:1px;'></div>
+				<% if user_signed_in? %>
+					<% unless current_user.carts.find_by(item_id: @item.id).present? %>
+						<%= link_to carts_path( :cart => { :item_id => @item.id, :user_id => current_user.id}), style: 'text-decoration:none;', :method => :post do %>
+							<button class='btn btn-default' style='float:right; margin-top:10px;'><span class='glyphicon glyphicon-shopping-cart'></span> Add to cart
+							</button>
+						<% end %>
+					<% else %>
+						<p style='float:right; margin-top:10px; border:dashed; border-width:1px; padding:5px;'>This item is already in your cart</p>
+					<% end %>
+				<% else %>
+					<p style='float:right; margin-top:10px; border:dashed; border-width:1px; padding:5px;'>You need to sign into your account in order to purchase this item</p>
+				<% end %>
+			</div>
+		<% end %>
+	  </div>
+	</div>
+</div>
+
+<script>
+$("#<%= @item.name.gsub(/ /,'-') %>-image").imageLens({ imageSrc: "<%= @item.image.url %>" });
+<% @item.itemimages.each_with_index do |image, index| %>
+	$('#'+<%= index.to_s %>+"-image").imageLens({ imageSrc: "<%= image.image.url %>" });
+<% end %>
+$('.choose-image').on('click', function(){
+	$('.active').hide();
+	$('.active').removeClass();
+	$('#'+this.id.replace('-show','-image')).show();
+	$('#'+this.id.replace('-show','-image')).addClass('active');
+});
+</script>

@@ -1,11 +1,37 @@
-<div class="jumbotron center">
-     <h1>Welcome to my app!</h1>
-     <% if user_signed_in? %>
-          # do something
-     <% else %>
-       <p>
-         <%= link_to "Log in", new_user_session_path, class: "btn btn-default btn-lg" %>
-         <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary btn-lg" %>
-       </p>
-  <% end %>  
+<div id="container">
+  <% @items.each do |item| %>
+    <div class='item panel panel-default'>
+      <%= link_to image_tag(item.image.url(:medium)), item %>
+      <div class="panel-body">
+        	<%= link_to item.name, item, style: "text-decoration:none; color:black;" %><br/>
+  		  <p class='author'><strong>Author:</strong> <%= link_to item.artist.name, item.artist, style: "text-decoration:none; color:black;" %></p>
+        <p style='margin:0; display:block; float:right;'><strong>Price:</strong> <%= number_to_currency(item.price) %>$</p>
+  			<div class="actions">
+  			  <% if current_user.try(:admin?) %>
+    				<br/><%= link_to 'Edit', edit_item_path(item) %>
+    				<%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %>
+  			  <% end %>
+  			</div>
+  	  </div>
+    </div>
+  <% end %>
 </div>
+
+<script>
+var isotopeLaunch = function(){
+  var $container = $('#container');
+    // init
+    $container.isotope({
+      // options
+      itemSelector: '.item',
+      layoutMode: 'masonry',
+      masonry: {
+        columnWidth: 50,
+        isFitWidth: true
+      }
+    });
+};
+$(document).ready(isotopeLaunch);
+$(window).load(isotopeLaunch);
+$(document).on( 'page:load', isotopeLaunch);
+</script>

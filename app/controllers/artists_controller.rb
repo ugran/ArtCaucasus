@@ -1,5 +1,7 @@
 class ArtistsController < ApplicationController
   before_action :set_artist, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :admin_user, except: [:index, :show]
 
   respond_to :html
 
@@ -9,7 +11,7 @@ class ArtistsController < ApplicationController
   end
 
   def show
-    respond_with(@artist)
+    respond_with(@artist, @items = @artist.items)
   end
 
   def new
@@ -41,7 +43,13 @@ class ArtistsController < ApplicationController
       @artist = Artist.find(params[:id])
     end
 
+    def admin_user
+      unless current_user.try(:admin?)
+        redirect_to :root, notice: "Only admins are authorized for this"
+      end
+    end
+
     def artist_params
-      params.require(:artist).permit(:description, :image)
+      params.require(:artist).permit(:name, :description, :image, :specialization, :country, :manager, :phone_number, :secondary_phone_number, :email, :secondary_email )
     end
 end

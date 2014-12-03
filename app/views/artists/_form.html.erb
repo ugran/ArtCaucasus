@@ -12,8 +12,48 @@
   <% end %>
 
   <div class="form-group">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :description %><br>
-    <%= f.text_field :description, class: "form-control" %>
+    <%= f.text_area :description, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :specialization %><br>
+    <%= f.select :specialization, [ 'Painter', 'Sculptor', 'Photographer', 'Enamel'], class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :country %><br>
+    <%= f.select :country, [ 'Georgia', 'Armenia', 'Azerbaijan', 'Turkey', 'Russia', 'Ukraine', 'USA' ], class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :manager %><br>
+    <%= f.text_field :manager, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :phone_number %><br>
+    <%= f.text_field :phone_number, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :secondary_phone_number %><br>
+    <%= f.text_field :secondary_phone_number, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email %><br>
+    <%= f.text_field :email, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :secondary_email %><br>
+    <%= f.text_field :secondary_email, class: "form-control" %>
   </div>
 
   <div class="form-group">

@@ -12,13 +12,57 @@
   <% end %>
 
   <div class="form-group">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :description %><br>
     <%= f.text_field :description, class: "form-control" %>
   </div>
 
   <div class="form-group">
+    <%= f.label :item_type %><br>
+    <%= f.select :item_type, [ 'Painting', 'Sculpture', 'Photograph', 'Enamel'], class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :date_of_creation %><br>
+    <%= f.text_field :date_of_creation, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :dimensions %><br>
+    <%= f.text_field :dimensions, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :additional_info %><br>
+    <%= f.text_field :additional_info, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :price %><br>
+    <%= f.text_field :price, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :discount %><br>
+    <%= f.text_field :discount, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :quantity %><br>
+    <%= f.text_field :quantity, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :image %>
     <%= f.file_field :image, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.select :artist_id, options_from_collection_for_select(@artists, "id", "name") %>
   </div>
 
   <div class="form-group">

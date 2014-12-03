@@ -4,7 +4,12 @@ Rails.application.routes.draw do
 
   resources :items
 
+  resources :itemimages
+
+  resources :carts
+
   devise_for :users
+
 	root "pages#home"
-	
+
 end

@@ -15,7 +15,7 @@ role :db,  %w{ugran@104.236.1.142}
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server '102.236.1.142', user: 'ugran', roles: %w{web app}, my_property: :my_value
+server '104.236.1.142', user: 'ugran', roles: %w{web app db}, my_property: :my_value
 
 
 # Custom SSH Options

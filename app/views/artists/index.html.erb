@@ -3,6 +3,8 @@
   <div style='width:100%; border-top:solid; margin-bottom:20px; margin-top:20px;'></div>
 <% end %>
 
+<%= link_to 'F', artists_path(:start => 'f') %> <%= link_to 'G', artists_path(:start => 'g') %> <%= link_to 'V', artists_path(:start => 'v') %>
+
 <div id="container">
   <% @artists.each do |artist| %>
     <div class='item panel panel-default'>

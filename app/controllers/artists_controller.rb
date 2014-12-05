@@ -6,7 +6,11 @@ class ArtistsController < ApplicationController
   respond_to :html
 
   def index
-    @artists = Artist.all
+    if params[:start].present?
+      @artists = Artist.all.select{ |a| a.name.start_with?(params[:start].capitalize)}.sort_by!{ |m| m.name.downcase }
+    else
+      @artists = Artist.reorder('name DESC')
+    end
     respond_with(@artists)
   end
 

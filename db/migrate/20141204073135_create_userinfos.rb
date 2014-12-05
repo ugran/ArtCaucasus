@@ -1,12 +1,12 @@
 class CreateUserinfos < ActiveRecord::Migration
   def change
     create_table :userinfos do |t|
-      t.text :firstname
-      t.text :lastname
-      t.text :country
+      t.string :firstname
+      t.string :lastname
+      t.string :country
       t.text :address
-      t.text :phone
-      t.text :zipcode
+      t.string :phone
+      t.string :zipcode
       t.integer :user_id
 
       t.timestamps

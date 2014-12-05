@@ -14,15 +14,15 @@
 ActiveRecord::Schema.define(version: 20141204073135) do
 
   create_table "artists", force: true do |t|
-    t.text     "name"
+    t.string   "name"
     t.text     "description"
-    t.text     "specialization"
-    t.text     "country"
-    t.text     "manager"
-    t.text     "phone_number"
-    t.text     "secondary_phone_number"
-    t.text     "email"
-    t.text     "secondary_email"
+    t.string   "specialization"
+    t.string   "country"
+    t.string   "manager"
+    t.string   "phone_number"
+    t.string   "secondary_phone_number"
+    t.string   "email"
+    t.string   "secondary_email"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_file_name"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20141204073135) do
   add_index "carts", ["user_id"], name: "index_carts_on_user_id"
 
   create_table "itemimages", force: true do |t|
-    t.text     "description"
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "item_id"
@@ -59,11 +59,11 @@ ActiveRecord::Schema.define(version: 20141204073135) do
   add_index "itemimages", ["item_id"], name: "index_itemimages_on_item_id"
 
   create_table "items", force: true do |t|
-    t.text     "name"
+    t.string   "name"
     t.text     "description"
-    t.text     "item_type"
-    t.text     "date_of_creation"
-    t.text     "dimensions"
+    t.string   "item_type"
+    t.string   "date_of_creation"
+    t.string   "dimensions"
     t.text     "additional_info"
     t.integer  "sold_out"
     t.integer  "price"
@@ -81,8 +81,8 @@ ActiveRecord::Schema.define(version: 20141204073135) do
   add_index "items", ["artist_id"], name: "index_items_on_artist_id"
 
   create_table "orders", force: true do |t|
-    t.text     "tracking_number"
-    t.text     "status"
+    t.string   "tracking_number"
+    t.string   "status"
     t.text     "description"
     t.text     "additional_info"
     t.integer  "u_id"
@@ -98,12 +98,12 @@ ActiveRecord::Schema.define(version: 20141204073135) do
   add_index "orders", ["user_id"], name: "index_orders_on_user_id"
 
   create_table "userinfos", force: true do |t|
-    t.text     "firstname"
-    t.text     "lastname"
-    t.text     "country"
+    t.string   "firstname"
+    t.string   "lastname"
+    t.string   "country"
     t.text     "address"
-    t.text     "phone"
-    t.text     "zipcode"
+    t.string   "phone"
+    t.string   "zipcode"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -112,16 +112,16 @@ ActiveRecord::Schema.define(version: 20141204073135) do
   add_index "userinfos", ["user_id"], name: "index_userinfos_on_user_id"
 
   create_table "users", force: true do |t|
-    t.text     "email",                  default: "",    null: false
-    t.text     "encrypted_password",     default: "",    null: false
-    t.text     "reset_password_token"
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.text     "current_sign_in_ip"
-    t.text     "last_sign_in_ip"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin",                  default: false

@@ -1,11 +1,11 @@
 class CreateItems < ActiveRecord::Migration
   def change
     create_table :items do |t|
-      t.text :name
+      t.string :name
       t.text :description
-      t.text :item_type
-      t.text :date_of_creation
-      t.text :dimensions
+      t.string :item_type
+      t.string :date_of_creation
+      t.string :dimensions
       t.text :additional_info
       t.integer :sold_out
       t.integer :price

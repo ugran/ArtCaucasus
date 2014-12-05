@@ -14,11 +14,4 @@ gem 'devise'
 gem "paperclip", "~> 4.2"
 gem 'jquery-turbolinks'
 gem 'sqlite3'
-
-group :development, :test do
- 	gem 'capistrano',         require: false
-    gem 'capistrano-rvm',     require: false
-    gem 'capistrano-rails',   require: false
-    gem 'capistrano-bundler', require: false
-    gem 'capistrano3-puma',   require: false
-end
+gem 'puma'

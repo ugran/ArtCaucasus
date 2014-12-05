@@ -1,5 +1,5 @@
 # Change these
-server 'server', port: 22, roles: [:web, :app, :db], primary: true
+server '104.236.1.142', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:ugran/ArtCaucasus.git'
 set :application,     'artcaucasus'
@@ -21,7 +21,7 @@ set :puma_error_log,  "#{release_path}/log/puma.access.log"
 set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
-set :puma_init_active_record, false  # Change to true if using ActiveRecord
+set :puma_init_active_record, true  # Change to true if using ActiveRecord
 
 ## Defaults:
 # set :scm,           :git

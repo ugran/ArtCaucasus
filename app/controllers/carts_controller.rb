@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
 	before_action :authenticate_user!
+  before_action :set_cart, only: [:destroy]
 	
   def index
 	  @carts = current_user.carts
@@ -13,7 +14,16 @@ class CartsController < ApplicationController
     redirect_to carts_path
   end
 
+  def destroy
+    @cart.destroy
+    redirect_to carts_path
+  end
+
   private
+
+    def set_cart
+      @cart = Cart.find(params[:id])
+    end
 
     def cart_params
       params.require(:cart).permit(:item_id, :user_id)

@@ -27,6 +27,11 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :sold_out%><br>
+    <%= f.select :sold_out, [['No',0],['Yes',1]], class: "form-control" %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :date_of_creation %><br>
     <%= f.text_field :date_of_creation, class: "form-control" %>
   </div>

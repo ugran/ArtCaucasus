@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.4'
+gem 'rails', '4.1.8'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
@@ -13,12 +13,12 @@ gem 'bootstrap-sass'
 gem 'devise'
 gem "paperclip", "~> 4.2"
 gem 'jquery-turbolinks'
+gem 'sqlite3'
 
 group :development, :test do
-     gem 'sqlite3'
-end
-
-group :production do
-     gem 'pg'
-     gem 'rails_12factor'
+ 	gem 'capistrano',         require: false
+    gem 'capistrano-rvm',     require: false
+    gem 'capistrano-rails',   require: false
+    gem 'capistrano-bundler', require: false
+    gem 'capistrano3-puma',   require: false
 end

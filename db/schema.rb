@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141128122928) do
+ActiveRecord::Schema.define(version: 20141204073135) do
 
   create_table "artists", force: true do |t|
     t.text     "name"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20141128122928) do
     t.text     "date_of_creation"
     t.text     "dimensions"
     t.text     "additional_info"
+    t.integer  "sold_out"
     t.integer  "price"
     t.integer  "discount"
     t.integer  "quantity"
@@ -95,6 +96,20 @@ ActiveRecord::Schema.define(version: 20141128122928) do
 
   add_index "orders", ["item_id"], name: "index_orders_on_item_id"
   add_index "orders", ["user_id"], name: "index_orders_on_user_id"
+
+  create_table "userinfos", force: true do |t|
+    t.text     "firstname"
+    t.text     "lastname"
+    t.text     "country"
+    t.text     "address"
+    t.text     "phone"
+    t.text     "zipcode"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "userinfos", ["user_id"], name: "index_userinfos_on_user_id"
 
   create_table "users", force: true do |t|
     t.text     "email",                  default: "",    null: false

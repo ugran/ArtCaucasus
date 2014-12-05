@@ -78,12 +78,12 @@
 	  <div class="col-md-4">
 	  	<p style='font-weight:bold;'>Choose Images:</p>
 	  	<div class='choose-image' id='<%= @item.name.gsub(/ /,"-")+"-show" %>'>
-	  		<%= image_tag @item.image.url(:small) %>
+	  		<%= image_tag @item.image.url(:small), style: "cursor:pointer;" %>
 	  	</div>
 		<% if @item.itemimages.present? %>
 			<% @item.itemimages.each_with_index do |image, index| %>
 				<div class='choose-image' id='<%= index %>-show'>
-					<%= image_tag image.image.url(:small) %>
+					<%= image_tag image.image.url(:small), style: "cursor:pointer;" %>
 				</div>
 			<% end %>
 		<% end %>
@@ -115,7 +115,48 @@
 	</div>
 </div>
 
+<% if @item.artist.items.where.not(id: @item.id).present? %>
+	<div style='width:100%; border-top:solid; border-width:2px; margin-bottom:10px; margin-top:20px;'></div>
+
+	<p style='margin-bottom:20px; font-size:150%; font-weight:bold;'>
+		Other Items By <%= @item.artist.name %>:
+	</p>
+	<div id="container">
+	  <% @item.artist.items.where.not(id: @item.id).each do |item| %>
+	    <div class='item panel panel-default'>
+	      <%= link_to image_tag(item.image.url(:medium)), item %>
+	      <div class="panel-body">
+	        	<%= link_to item.name, item, style: "text-decoration:none; color:black;" %><br/>
+	  		  <p class='author'><strong>Author:</strong> <%= link_to item.artist.name, item.artist, style: "text-decoration:none; color:black;" %></p>
+	  		  <p style='margin:0; display:block; float:right;'><strong>Price:</strong> <%= number_to_currency(item.price) %>$</p>
+	  			<div class="actions">
+	  			  <% if current_user.try(:admin?) %>
+	  				<br/><%= link_to 'Edit', edit_item_path(item) %>
+	  				<%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %>
+	  			  <% end %>
+	  			</div>
+	  	  </div>
+	    </div>
+	  <% end %>
+	</div>
+<% end %>
+
 <script>
+var isotopeLaunch = function(){
+  var $container = $('#container');
+    // init
+    $container.isotope({
+      // options
+      itemSelector: '.item',
+      layoutMode: 'masonry',
+      masonry: {
+        columnWidth: 50,
+        isFitWidth: true
+      }
+    });
+};
+imagesLoaded( 'img', isotopeLaunch);
+
 $("#<%= @item.name.gsub(/ /,'-') %>-image").imageLens({ imageSrc: "<%= @item.image.url %>" });
 <% @item.itemimages.each_with_index do |image, index| %>
 	$('#'+<%= index.to_s %>+"-image").imageLens({ imageSrc: "<%= image.image.url %>" });

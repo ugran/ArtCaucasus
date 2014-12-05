@@ -1,0 +1,47 @@
+<%= form_for @userinfobuild, html: { multipart: true } do |f| %>
+  <% if @userinfobuild.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@userinfobuild.errors.count, "error") %> prohibited this user information from being saved:</h2>
+
+      <ul>
+      <% @userinfobuild.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :firstname %><br>
+    <%= f.text_field :firstname, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :lastname %><br>
+    <%= f.text_field :lastname, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :country %><br>
+    <%= f.select :country, [ 'United states', 'Canada' ], class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :address %><br>
+    <%= f.text_field :address, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :phone %><br>
+    <%= f.text_field :phone, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :zipcode %><br>
+    <%= f.text_field :zipcode, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit 'Edit User Information', class: "btn btn-primary" %>
+  </div>
+<% end %>

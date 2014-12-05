@@ -1,0 +1,84 @@
+<% all_total = 0 %>
+
+<h3>Shopping Cart:</h3>
+
+<% if @carts.present? %>
+	<div class='container' style='width:100%; border:solid; border-width:1px; padding:15px; margin-top:20px;'>
+		<% @carts.each_with_index do |cart, index| %>
+			<div class='row'>
+				<div class="col-md-3 cart-column img" style='text-align:center;'>
+					<%= link_to cart.item do %>
+						<%= image_tag cart.item.image.url(:small) %>
+					<% end %>
+				</div>
+				<div class="col-md-4 cart-column" style='display:table;'>
+					<p style='display:table-cell; vertical-align:middle; font-size:110%;'>
+						<strong>Item Name:</strong> <%= link_to cart.item.name, cart.item, style: 'text-decoration:none; color:black;' %><br/>
+						<strong>By:</strong> <%= link_to cart.item.artist.name, cart.item.artist, style: 'text-decoration:none; color:black;' %><br/>
+						<strong>Dimensions:</strong> <%= cart.item.dimensions %><br/>
+					</p>
+				</div>
+				<div class="col-md-3 cart-column" style='display:table;'>
+					<p style='display:table-cell; vertical-align:middle; font-size:110%;'>
+						<strong>Price:</strong> <%= number_to_currency(cart.item_price) %>$<br/>
+						<strong>Shipping Cost:</strong> <%= number_to_currency(cart.shipping_cost) %>$<br/>
+						<% if cart.item.quantity.present? %>
+							<strong>Available Quantity:</strong> <%= cart.item.quantity %><br/>
+						<% end %>
+						<% total = cart.item_price + cart.shipping_cost %>
+						<strong>Total:</strong> <%= number_to_currency(total) %>$
+					</p>
+				</div>
+				<div class="col-md-2 cart-column" style='display:table; text-align:center;'>
+					<%= link_to cart, style: 'display:table-cell; vertical-align:middle;', :method => :delete do %>
+						<button class='btn btn-default'>Remove</button>
+					<% end %>
+				</div>
+			</div>
+			<% if index != @carts.length-1 %>
+				<div style='height:1px; width:95%; border-bottom:dashed; border-width:1px; margin-top:10px; margin-bottom:10px; margin-left:auto; margin-right:auto;'>
+				</div>
+			<% end %>
+			<% all_total += cart.item_price+cart.shipping_cost %>
+		<% end %>
+	</div>
+	<div class='row'>
+		<div class='col-md-6'>
+			<h3>Shipping information:</h3>
+			<% unless current_user.userinfo.present? %>
+
+			<% else %>
+				<strong>Name:</strong> <%= current_user.userinfo.firstname if current_user.userinfo.firstname.present? %> <%= current_user.userinfo.lastname if current_user.userinfo.lastname.present? %><br/>
+				<strong>Country:</strong> <%= current_user.userinfo.country if current_user.userinfo.country.present? %><br/>
+				<strong>Address:</strong> <%= current_user.userinfo.address if current_user.userinfo.address.present? %><br/>
+				<strong>Phone Number:</strong> <%= current_user.userinfo.phone if current_user.userinfo.phone.present? %><br/>
+				<strong>Zip Code:</strong> <%= current_user.userinfo.zipcode if current_user.userinfo.zipcode.present? %><br/>
+				<%= link_to userinfos_path do %>
+					<button class='btn btn-default' style='width:100px; margin:5px; font-weight:bold;'>Edit</button>
+				<% end %>
+			<% end %>
+		</div>
+		<div class='col-md-6'>
+			<p style='width:100%; text-align:right; margin-top:20px; font-size:150%;'><strong>Total:</strong> <%= number_to_currency(all_total) %>$</p>
+			<%= link_to carts_path, style: 'float:right;' do %>
+				<button class='btn btn-primary'>Continue To Checkout</button>
+			<% end %>
+		</div>
+	</div>
+<% else %>
+	<p style='margin-left:2%; margin-top:20px; font-size:120%;'>Your shopping cart is empty.</p>
+<% end %>
+
+<script>
+ var cartImagesLoaded = function() {
+    var heights = $(".cart-column").map(function() {
+        return $(this).height();
+    }).get(),
+
+    maxHeight = Math.max.apply(null, heights);
+
+    $(".cart-column").height(maxHeight);
+    $(".img").css("line-height", maxHeight+"px")
+};
+imagesLoaded( 'img', cartImagesLoaded);
+</script>

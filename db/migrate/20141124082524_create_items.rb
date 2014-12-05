@@ -7,6 +7,7 @@ class CreateItems < ActiveRecord::Migration
       t.text :date_of_creation
       t.text :dimensions
       t.text :additional_info
+      t.integer :sold_out
       t.integer :price
       t.integer :discount
       t.integer :quantity

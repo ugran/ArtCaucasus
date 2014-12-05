@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   resources :carts
 
+  resources :userinfos
+
   devise_for :users
 
 	root "pages#home"

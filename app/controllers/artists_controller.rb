@@ -6,10 +6,11 @@ class ArtistsController < ApplicationController
   respond_to :html
 
   def index
+    @alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     if params[:start].present?
       @artists = Artist.all.select{ |a| a.name.start_with?(params[:start].capitalize)}.sort_by!{ |m| m.name.downcase }
     else
-      @artists = Artist.reorder('name DESC')
+      @artists = Artist.reorder('name ASC')
     end
     respond_with(@artists)
   end

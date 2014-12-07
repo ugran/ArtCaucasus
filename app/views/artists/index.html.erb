@@ -3,24 +3,37 @@
   <div style='width:100%; border-top:solid; margin-bottom:20px; margin-top:20px;'></div>
 <% end %>
 
-<%= link_to 'F', artists_path(:start => 'f') %> <%= link_to 'G', artists_path(:start => 'g') %> <%= link_to 'V', artists_path(:start => 'v') %>
+<div class='row' style='margin-bottom:20px;'>
+  <div class='col-md-8'>
+    <p style="display:inline-block; font-weight:bold; font-size:110%; margin-right:10px;">Browse:</p>
+    <% @alphabet.each do |character| %>
+      <%= link_to character, artists_path(:start => character), style: 'font-weight:bold; margin-right:5px;' %>
+    <% end %>
+  </div>
+  <div class='col-md-4'>
+  </div>
+</div>
 
-<div id="container">
-  <% @artists.each do |artist| %>
-    <div class='item panel panel-default'>
-      <%= link_to image_tag(artist.image.url(:thumb)), artist %>
-      <div class="panel-body">
-          <p class='artist-name'><%= artist.name %></p>
-        <div class="actions">
-          <% if current_user.try(:admin?) %>
-          <%= link_to 'Edit', edit_artist_path(artist) %>
-          <%= link_to 'Destroy', artist, method: :delete, data: { confirm: 'Are you sure?' } %>
-          <% end %>
+<% if @artists.present? %>
+  <div id="container">
+    <% @artists.each do |artist| %>
+      <div class='item panel panel-default'>
+        <%= link_to image_tag(artist.image.url(:thumb)), artist %>
+        <div class="panel-body">
+            <p class='artist-name'><%= artist.name %></p>
+          <div class="actions">
+            <% if current_user.try(:admin?) %>
+            <%= link_to 'Edit', edit_artist_path(artist) %>
+            <%= link_to 'Destroy', artist, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+          </div>
         </div>
       </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
+<% else %>
+  We don't yet have an artist with a name that starts with <strong><%= params[:start] %></strong>.
+<% end %>
 
 <script>
 var isotopeLaunch = function(){

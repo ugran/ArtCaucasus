@@ -26,6 +26,11 @@
     <%= f.select :item_type, [ 'Painting', 'Sculpture', 'Photograph', 'Enamel'], class: "form-control" %>
   </div>
 
+  <div class='form-group'>
+    <%= f.label :item_tag %><br>
+    <%= f.select :item_tag, [ 'Landscape', 'Animals', 'Urban', 'Nature', 'People', 'Portrait', 'Food'], class: "form-control" %>
+  </div>
+
   <div class="form-group">
     <%= f.label :sold_out%><br>
     <%= f.select :sold_out, [['No',0],['Yes',1]], class: "form-control" %>
@@ -37,8 +42,23 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :dimensions %><br>
-    <%= f.text_field :dimensions, class: "form-control" %>
+    <%= f.label :height %><br>
+    <%= f.text_field :height, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :width %><br>
+    <%= f.text_field :width, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :width2 %><br>
+    <%= f.text_field :width2, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :shape %><br>
+    <%= f.text_field :shape, class: "form-control" %>
   </div>
 
   <div class="form-group">

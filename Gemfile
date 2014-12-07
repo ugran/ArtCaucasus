@@ -15,3 +15,4 @@ gem "paperclip", "~> 4.2"
 gem 'jquery-turbolinks'
 gem 'sqlite3'
 gem 'puma'
+gem 'will_paginate', '~> 3.0.6'

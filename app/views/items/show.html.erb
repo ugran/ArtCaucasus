@@ -62,7 +62,8 @@
 	  	</div>
 	  	<div id='paramenters'>
 	  		<p id='item-type'><strong>Type:</strong> <%= @item.item_type %></p>
-	  		<p id='item-dimensions'>, <strong>Dimensions:</strong> <%= @item.dimensions %></p>
+	  		<p id='item-dimensions'>, <strong>Dimensions:</strong> <%= @item.height %>x<%= @item.width %>x<%= @item.width2 %></p>
+	  		<p id='item-dimensions'>, <strong>Shape:</strong> <%= @item.shape %></p>
 	  	</div>
 	  	<% if @item.description.present? %>
 		  	<p id='description'>

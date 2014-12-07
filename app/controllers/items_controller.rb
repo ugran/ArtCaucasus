@@ -6,8 +6,8 @@ class ItemsController < ApplicationController
   respond_to :html
 
   def index
-    @items = Item.all
-    respond_with(@items)
+      @items = Item.all
+      respond_with(@items)
   end
 
   def show
@@ -52,6 +52,6 @@ class ItemsController < ApplicationController
     end
 
     def item_params
-      params.require(:item).permit(:name, :description, :image, :artist_id, :item_type, :item_tag,:date_of_creation, :dimensions, :additional_info, :price, :discount, :quantity)
+      params.require(:item).permit(:name, :description, :image, :artist_id, :item_type, :item_tag,:date_of_creation, :height, :width, :width2, :shape , :additional_info, :price, :discount, :quantity)
     end
 end

@@ -30,14 +30,21 @@
   </div>
 </div>
 
+
 <div id="container">
   <% @items.each do |item| %>
-    <div class='item' style='text-align:center; margin-right:20px; margin-left:20px; width:340px; margin-bottom:50px;'>
-      <%= link_to item do %>
-        <%= image_tag item.image.url(:medium), style: "margin-right:auto; margin-left:auto;-webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);-moz-box-shadow:    7px 7px 5px 0px rgba(50, 50, 50, 0.75);box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75); margin-bottom:15px;" %>
-      <% end %>
-      <%= link_to item.name.capitalize, item, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; font-weight:bold; display:block; margin-bottom:0px;" %>
-      <%= link_to item.artist.name.capitalize, item.artist, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; margin-top:0px; display:block;" %>
+    <div class='item panel panel-default'>
+      <%= link_to image_tag(item.image.url(:medium)), item %>
+      <div class="panel-body">
+        	<%= link_to item.name, item, style: "text-decoration:none; color:black;" %><br/>
+  		  <p class='author'><strong>Author:</strong> <%= link_to item.artist.name, item.artist, style: "text-decoration:none; color:black;" %></p>
+  			<div class="actions">
+  			  <% if current_user.try(:admin?) %>
+    				<br/><%= link_to 'Edit', edit_item_path(item) %>
+    				<%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %>
+  			  <% end %>
+  			</div>
+  	  </div>
     </div>
   <% end %>
 </div>
@@ -49,7 +56,11 @@ var isotopeLaunch = function(){
     $container.isotope({
       // options
       itemSelector: '.item',
-      layoutMode: 'fitRows',
+      layoutMode: 'masonry',
+      masonry: {
+        columnWidth: 50,
+        isFitWidth: true
+      }
     });
 };
 imagesLoaded( 'img', isotopeLaunch);

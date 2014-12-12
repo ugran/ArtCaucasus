@@ -13,7 +13,7 @@
 		</div>
 		<div class="col-md-8">
 			<p style='font-weight:bold; font-size:200%;'><%= @artist.name %></p>
-			<%= @artist.description %>
+			<%= @artist.description.gsub(/\n/, '<br/>').html_safe %>
 		</div>
 	</div>
 </div>

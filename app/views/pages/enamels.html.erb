@@ -1,0 +1,87 @@
+<% unless @sort_by.present? %>
+  <ol class="breadcrumb" style='text-align:center; margin-bottom:0px;'>
+    <p style='display:inline-block; margin-bottom:0; margin-right:30px; font-weight:bold;'>ENAMEL:</p>
+    <li><%= link_to 'All', enamels_path, style: 'font-weight:bold;' %></li>
+    <li><%= link_to 'Bracelet', enamels_path(:theme => 'Bracelet'), style: 'font-weight:bold;' %></li>
+    <li><%= link_to 'Earring', enamels_path(:theme => 'Earring'), style: 'font-weight:bold;' %></li>
+    <li><%= link_to 'Icon', enamels_path(:theme => 'Icon'), style: 'font-weight:bold;' %></li>
+    <li><%= link_to 'Necklace', enamels_path(:theme => 'Necklace'), style: 'font-weight:bold;' %></li>
+    <li><%= link_to 'Pin', enamels_path(:theme => 'Pin'), style: 'font-weight:bold;' %></li>
+    <li><%= link_to 'Ring', enamels_path(:theme => 'Ring'), style: 'font-weight:bold;' %></li>
+    <li><%= link_to 'Other', enamels_path(:theme => 'Other'), style: 'font-weight:bold;' %></li>
+    <div style='display:inline-block; margin-left:40px;'>
+      <% unless @theme.present? %>
+        <%= form_tag(enamels_path, :id => "sort_select", method: :get) do %>
+          Sort By: <%= select_tag :sort_by, options_for_select(['Recently added',' Price low to high', 'Price high to low', 'Most Comments', 'Most Votes', 'Discounted Items', 'Sold Items'], disabled: "Most Votes"), :onchange => ("$('#sort_select').submit()") %>
+        <% end %>
+      <% else %>
+        <%= form_tag(enamels_path, :id => "sort_select", method: :get) do %>
+          Sort By: <%= select_tag :sort_by, options_for_select(['Recently added', 'Price low to high', 'Price high to low', 'Most Comments', 'Most Votes', 'Discounted Items', 'Sold Items'], disabled: "Most Votes"), :onchange => ("$('#sort_select').submit()") %>
+          <%= hidden_field_tag :theme, @theme %>
+        <% end %>
+      <% end %>
+    </div>
+  </ol>
+<% else %>
+  <ol class="breadcrumb" style='text-align:center; margin-bottom:0px;'>
+    <p style='display:inline-block; margin-bottom:0; margin-right:30px; font-weight:bold;'>ENAMEL:</p>
+    <li><%= link_to 'All', enamels_path, style: 'font-weight:bold;' %></li>
+    <li><%= link_to 'Bracelet', enamels_path(:theme => 'Bracelet', :sort_by => @sort_by), style: 'font-weight:bold;' %></li>
+    <li><%= link_to 'Earring', enamels_path(:theme => 'Earring', :sort_by => @sort_by), style: 'font-weight:bold;' %></li>
+    <li><%= link_to 'Icon', enamels_path(:theme => 'Icon', :sort_by => @sort_by), style: 'font-weight:bold;' %></li>
+    <li><%= link_to 'Necklace', enamels_path(:theme => 'Necklace', :sort_by => @sort_by), style: 'font-weight:bold;' %></li>
+    <li><%= link_to 'Pin', enamels_path(:theme => 'Pin', :sort_by => @sort_by), style: 'font-weight:bold;' %></li>
+    <li><%= link_to 'Ring', enamels_path(:theme => 'Ring', :sort_by => @sort_by), style: 'font-weight:bold;' %></li>
+    <li><%= link_to 'Other', enamels_path(:theme => 'Other', :sort_by => @sort_by), style: 'font-weight:bold;' %></li>
+    <div style='display:inline-block; margin-left:40px;'>
+      <% unless @theme.present? %>
+        <%= form_tag(enamels_path, :id => "sort_select", method: :get) do %>
+          Sort By: <%= select_tag :sort_by, options_for_select(['Recently added',' Price low to high', 'Price high to low', 'Most Comments', 'Most Votes', 'Discounted Items', 'Sold Items'], selected: @sort_by, disabled: "Most Votes"), :onchange => ("$('#sort_select').submit()") %>
+        <% end %>
+      <% else %>
+        <%= form_tag(enamels_path, :id => "sort_select", method: :get) do %>
+          Sort By: <%= select_tag :sort_by, options_for_select(['Recently added', 'Price low to high', 'Price high to low', 'Most Comments', 'Most Votes', 'Discounted Items', 'Sold Items'], selected: @sort_by, disabled: "Most Votes"), :onchange => ("$('#sort_select').submit()") %>
+          <%= hidden_field_tag :theme, @theme %>
+        <% end %>
+      <% end %>
+    </div>
+  </ol>
+<% end %>
+
+<div id='loading' style='width:100%; text-align:center;'>
+  <%= image_tag '/assets/loading.gif', style: 'margin-top:-150px;' %>
+</div>
+
+<div id="container" style='display:none;'>
+  <% @items.each do |item| %>
+    <div class='item' style='text-align:center; margin-right:20px; margin-left:20px; width:340px; margin-bottom:50px;'>
+      <%= link_to item do %>
+        <%= image_tag item.image.url(:medium), style: "margin-right:auto; margin-left:auto;-webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);-moz-box-shadow:    7px 7px 5px 0px rgba(50, 50, 50, 0.75);box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75); margin-bottom:15px;" %>
+      <% end %>
+      <%= link_to item.name.capitalize, item, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; font-weight:bold; display:block; margin-bottom:0px;" %>
+      <%= link_to item.artist.name.capitalize, item.artist, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; margin-top:0px; display:block;" %>
+    </div>
+  <% end %>
+</div>
+
+<div style='text-align:center;'>
+   <%= will_paginate @items, renderer: BootstrapPagination::Rails %>
+</div>
+
+<script>
+var isotopeLaunch = function(){
+  var $container = $('#container');
+    // init
+
+    $container.isotope({
+      // options
+      itemSelector: '.item',
+      layoutMode: 'fitRows',
+    });
+};
+imagesLoaded( 'img', function(){
+  $('#loading').hide();
+  $('#container').show();
+  isotopeLaunch();
+});
+</script>

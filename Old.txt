@@ -1,0 +1,55 @@
+ძველი ნივთები with panel panel-default
+
+<div id="container">
+  <% @items.each do |item| %>
+    <div class='item panel panel-default'>
+      <%= link_to image_tag(item.image.url(:medium)), item %>
+      <div class="panel-body">
+          <%= link_to item.name, item, style: "text-decoration:none; color:black;" %><br/>
+        <p class='author'><strong>Author:</strong> <%= link_to item.artist.name, item.artist, style: "text-decoration:none; color:black;" %></p>
+        <div class="actions">
+          <% if current_user.try(:admin?) %>
+            <br/><%= link_to 'Edit', edit_item_path(item) %>
+            <%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+-------------------------------------------------------------------------------------------------------------
+
+ძველი ფილტრები
+
+<div id="filters" style='margin-top:15px; margin-bottom:15px; border-bottom:solid; border-bottom-width:1px;'>
+  <p style='display:inline-block; margin-right:10px;'>Filter By:</p>
+  <%= link_to "Clear Filters", root_path, style: "display:inline-block; margin-right:10px;" %>
+  <div class="dropdown" style='display:inline-block; margin-right:10px;'>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Type<span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+      <% @item_types = ['Painting', 'Enamel'] %>
+      <% @item_types.each do |type| %>
+        <li><%= link_to type, root_path(:item_type => type) %></li> 
+      <% end %>
+    </ul>
+  </div>
+  <div class="dropdown" style='display:inline-block; margin-right:10px;'>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Subject<span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+      <% @themes = [ 'Landscape', 'Animals', 'Urban', 'Nature', 'People', 'Portrait', 'Food'] %>
+      <% @themes.each do |theme| %>
+        <li><%= link_to theme, root_path(:theme => theme) %></li> 
+      <% end %>
+    </ul>
+  </div>
+  <div class="dropdown" style='display:inline-block; margin-right:10px;'>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Shape<span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+      <% @shapes = ['Square', 'Horizontal', 'Vertical'] %>
+      <% @shapes.each do |shape| %>
+        <li><%= link_to shape, root_path(:shape => shape) %></li> 
+      <% end %>
+    </ul>
+  </div>
+</div>

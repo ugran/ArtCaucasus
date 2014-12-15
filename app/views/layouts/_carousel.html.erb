@@ -9,7 +9,11 @@
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+          <table id="wrapper">
+              <tr>
+                 <td><img src="<%= Item.find(1).image.url %>" alt="Second slide"></td>
+              </tr>
+           </table>
           <div class="container">
             <div class="carousel-caption">
               <h1>Example headline.</h1>
@@ -19,7 +23,11 @@
           </div>
         </div>
         <div class="item">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAGZmZgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
+          <table id="wrapper">
+              <tr>
+                 <td><img src="<%= Item.find(5).image.url %>" alt="Second slide"></td>
+              </tr>
+           </table>
           <div class="container">
             <div class="carousel-caption">
               <h1>Another example headline.</h1>
@@ -29,7 +37,11 @@
           </div>
         </div>
         <div class="item">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAFVVVQAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
+          <table id="wrapper">
+              <tr>
+                 <td><img src="<%= Item.find(4).image.url %>" alt="Second slide"></td>
+              </tr>
+           </table>
           <div class="container">
             <div class="carousel-caption">
               <h1>One more for good measure.</h1>

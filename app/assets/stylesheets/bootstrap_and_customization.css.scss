@@ -4,6 +4,7 @@ $font-family-sans-serif: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $navbar-default-link-color: White;
 $navbar-default-link-hover-color: #bdc3c7;
 $navbar-default-bg: Black;
+$navbar-height: 60px;
 
 @import "bootstrap-sprockets";
 @import 'bootstrap';
@@ -40,6 +41,12 @@ $navbar-default-bg: Black;
 
 .actions {
 	text-align:right;
+}
+
+#filters{
+	margin-bottom:40px;
+	border-bottom:solid;
+	border-bottom-width:1px;
 }
 
 .author {

@@ -69,9 +69,9 @@ ActiveRecord::Schema.define(version: 20141204073135) do
     t.string   "width2"
     t.string   "shape"
     t.text     "additional_info"
-    t.integer  "sold_out"
+    t.integer  "sold_out",           default: 0, null: false
     t.integer  "price"
-    t.integer  "discount"
+    t.integer  "discount",           default: 0, null: false
     t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -14,5 +14,7 @@ Rails.application.routes.draw do
 
 	root "pages#home"
 	get "test" => "pages#test"
-
+	get "paintings" => "pages#paintings"
+	get "enamels" => "pages#enamels"
+  
 end

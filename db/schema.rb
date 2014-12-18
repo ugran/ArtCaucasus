@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204073135) do
+ActiveRecord::Schema.define(version: 20141217132009) do
 
   create_table "artists", force: true do |t|
     t.string   "name"
@@ -44,6 +44,17 @@ ActiveRecord::Schema.define(version: 20141204073135) do
 
   add_index "carts", ["item_id"], name: "index_carts_on_item_id"
   add_index "carts", ["user_id"], name: "index_carts_on_user_id"
+
+  create_table "comments", force: true do |t|
+    t.text     "ccontent"
+    t.integer  "user_id"
+    t.integer  "item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["item_id"], name: "index_comments_on_item_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "itemimages", force: true do |t|
     t.string   "description"
@@ -80,9 +91,21 @@ ActiveRecord::Schema.define(version: 20141204073135) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.integer  "comments_count",     default: 0
+    t.integer  "likes_count",        default: 0
   end
 
   add_index "items", ["artist_id"], name: "index_items_on_artist_id"
+
+  create_table "likes", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "likes", ["item_id"], name: "index_likes_on_item_id"
+  add_index "likes", ["user_id"], name: "index_likes_on_user_id"
 
   create_table "orders", force: true do |t|
     t.string   "tracking_number"
@@ -116,6 +139,7 @@ ActiveRecord::Schema.define(version: 20141204073135) do
   add_index "userinfos", ["user_id"], name: "index_userinfos_on_user_id"
 
   create_table "users", force: true do |t|
+    t.string   "name",                   default: "",    null: false
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"

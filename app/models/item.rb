@@ -2,6 +2,8 @@ class Item < ActiveRecord::Base
 	has_many :itemimages
 	has_many :orders
 	has_many :carts
+	has_many :comments
+	has_many :likes
 
 	belongs_to :artist
 

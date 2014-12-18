@@ -17,9 +17,9 @@ class PagesController < ApplicationController
       elsif params[:sort_by] == 'Price high to low'
          @items = Item.where(:item_type => "Painting", :sold_out => 0).order(price: :desc).paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Most Comments'
-         @items = Item.where(:item_type => "Painting", :sold_out => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
+         @items = Item.where(:item_type => "Painting", :sold_out => 0).order(comments_count: :desc).paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Most Votes'
-         @items = Item.where(:item_type => "Painting", :sold_out => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
+         @items = Item.where(:item_type => "Painting", :sold_out => 0).order(likes_count: :desc).paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Discounted Items'
         @items = Item.where(:item_type => "Painting", :sold_out => 0).where.not(:discount => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Sold Items'
@@ -35,9 +35,9 @@ class PagesController < ApplicationController
       elsif params[:sort_by] == 'Price high to low'
          @items = Item.where(:item_type => "Painting", :item_tag => params[:theme], :sold_out => 0).order(price: :desc).paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Most Comments'
-         @items = Item.where(:item_type => "Painting", :item_tag => params[:theme], :sold_out => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
+         @items = Item.where(:item_type => "Painting", :item_tag => params[:theme], :sold_out => 0).order(comments_count: :desc).paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Most Votes'
-         @items = Item.where(:item_type => "Painting", :item_tag => params[:theme], :sold_out => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
+         @items = Item.where(:item_type => "Painting", :item_tag => params[:theme], :sold_out => 0).order(likes_count: :desc).paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Discounted Items'
         @items = Item.where(:item_type => "Painting", :item_tag => params[:theme], :sold_out => 0).where.not(:discount => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Sold Items'
@@ -61,9 +61,9 @@ class PagesController < ApplicationController
       elsif params[:sort_by] == 'Price high to low'
         @items = Item.where(:item_type => "Enamel", :sold_out => 0).order(price: :desc).paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Most Comments'
-        @items = Item.where(:item_type => "Enamel", :sold_out => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
+        @items = Item.where(:item_type => "Enamel", :sold_out => 0).order(comments_count: :desc).paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Most Votes'
-        @items = Item.where(:item_type => "Enamel", :sold_out => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
+        @items = Item.where(:item_type => "Enamel", :sold_out => 0).order(likes_count: :desc).paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Discounted Items'
         @items = Item.where(:item_type => "Enamel", :sold_out => 0).where.not(:discount => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Sold Items'
@@ -79,9 +79,9 @@ class PagesController < ApplicationController
       elsif params[:sort_by] == 'Price high to low'
         @items = Item.where(:item_type => "Enamel", :item_tag => params[:theme], :sold_out => 0).order(price: :desc).paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Most Comments'
-        @items = Item.where(:item_type => "Enamel", :item_tag => params[:theme], :sold_out => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
+        @items = Item.where(:item_type => "Enamel", :item_tag => params[:theme], :sold_out => 0).order(comments_count: :desc).paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Most Votes'
-        @items = Item.where(:item_type => "Enamel", :item_tag => params[:theme], :sold_out => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
+        @items = Item.where(:item_type => "Enamel", :item_tag => params[:theme], :sold_out => 0).order(likes_count: :desc).paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Discounted Items'
         @items = Item.where(:item_type => "Enamel", :item_tag => params[:theme], :sold_out => 0).where.not(:discount => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
       elsif params[:sort_by] == 'Sold Items'

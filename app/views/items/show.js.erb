@@ -1,0 +1,5 @@
+<% unless @like.present? %>
+	$('#comments').replaceWith('<%= j render("items/comments") %>');
+<% else %>
+	$('#likes').replaceWith('<%= j render("items/likes") %>')
+<% end %>

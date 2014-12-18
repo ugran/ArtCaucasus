@@ -10,10 +10,13 @@ Rails.application.routes.draw do
 
   resources :userinfos
 
+  resources :comments
+
+  resources :likes
+
   devise_for :users
 
 	root "pages#home"
-	get "test" => "pages#test"
 	get "paintings" => "pages#paintings"
 	get "enamels" => "pages#enamels"
   

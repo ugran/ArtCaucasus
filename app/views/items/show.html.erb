@@ -77,6 +77,22 @@
 		<% end %>
 	  </div>
 	  <div class="col-md-4">
+	  	<div id='likes' style='width:100%; text-align:right;'>
+	  		<% unless current_user.likes.find_by(:item_id => @item.id).present? %>
+		  		<%= link_to likes_path(like: {:item_id => @item.id}), method: :post, remote: true do %>
+				  	<button class='btn btn-default' style='margin-bottom:10px; padding-left:0; padding-right:0; padding-top:3px; padding-bottom:3px; border-color:#444;'>
+				  		<div style='font-size:120%; border-bottom:solid; border-color:#444; border-width:1px; margin-bottom:3px;'><%= @item.likes_count %></div><i class="fa fa-thumbs-up fa-lg"></i><p style='margin-bottom:0; margin-left:12px; margin-right:12px;'>Like</p>
+				  	</button>
+				<% end %>
+			<% else %>
+		  		<%= link_to like_path(current_user.likes.find_by(:item_id => @item.id)), method: :delete, remote: true do %>
+				  	<button class='btn btn-default' style='margin-bottom:10px; padding-left:0; padding-right:0; padding-top:3px; padding-bottom:3px; border-color:#444;'>
+				  		<div style='font-size:120%; border-bottom:solid; border-color:#444; border-width:1px; margin-bottom:3px;'><%= @item.likes_count %></div><i class="fa fa-thumbs-down fa-lg"></i><p style='margin-bottom:0; margin-left:12px; margin-right:12px;'>Unlike</p>
+				  	</button>
+				<% end %>
+			<% end %>
+		</div>
+		<div style='margin-bottom:5px; height:1px; width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px;'></div>
 	  	<p style='font-weight:bold;'>Choose Images:</p>
 	  	<div class='choose-image' id='<%= @item.name.gsub(/ /,"-")+"-show" %>'>
 	  		<%= image_tag @item.image.url(:small), style: "cursor:pointer;" %>
@@ -90,14 +106,14 @@
 		<% end %>
 		<% if @item.price.present? %>
 			<div id='price-place'>
-				<p style='display:inline-block; font-size:200%; font-weight:bold; margin-bottom:0;'>Price:</p>
-				<p style='display:inline-block; font-size:200%; font-weight:bold; margin-left:10px; margin-bottom:0;'><%= number_to_currency(@item.price) %></p>
-				<p style='display:inline-block; font-size:200%; font-weight:bold; margin-left:3px; margin-bottom:0;'>$</p>
-				<div style='margin:0; height:1px; width:100%; border-top:solid; border-width:1px;'></div>
+				<p style='display:inline-block; font-size:150%; font-weight:bold; margin-bottom:0;'>Price:</p>
+				<p style='display:inline-block; font-size:150%; font-weight:bold; margin-left:10px; margin-bottom:0;'><%= number_to_currency(@item.price) %></p>
+				<p style='display:inline-block; font-size:150%; font-weight:bold; margin-left:3px; margin-bottom:0;'>$</p>
 				<% if @item.quantity.present? %>
+					<div style='margin:0; height:1px; width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px;'></div>
 					<p style='display:block; font-size:120%; margin-top:2px; margin-bottom:5px;'><strong>Quantity:</strong> <%= @item.quantity %></p>
 				<% end %>
-				<div style='margin:0; height:1px; width:100%; border-top:solid; border-width:1px;'></div>
+				<div style='margin:0; height:1px; width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px; margin-top:5px;'></div>
 				<% if user_signed_in? %>
 					<% unless current_user.carts.find_by(item_id: @item.id).present? %>
 						<%= link_to carts_path( :cart => { :item_id => @item.id, :user_id => current_user.id}), style: 'text-decoration:none;', :method => :post do %>
@@ -117,30 +133,45 @@
 </div>
 
 <% if @item.artist.items.where.not(id: @item.id).present? %>
-	<div style='width:100%; border-top:solid; border-width:2px; margin-bottom:10px; margin-top:20px;'></div>
+	<div style='width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px; margin-bottom:10px; margin-top:20px;'></div>
 
 	<p style='margin-bottom:20px; font-size:150%; font-weight:bold;'>
-		Other Items By <%= @item.artist.name %>:
+		More from <%= @item.artist.name %>:
 	</p>
-	<div id="container">
-	  <% @item.artist.items.where.not(id: @item.id).each do |item| %>
-	    <div class='item panel panel-default'>
-	      <%= link_to image_tag(item.image.url(:medium)), item %>
-	      <div class="panel-body">
-	        	<%= link_to item.name, item, style: "text-decoration:none; color:black;" %><br/>
-	  		  <p class='author'><strong>Author:</strong> <%= link_to item.artist.name, item.artist, style: "text-decoration:none; color:black;" %></p>
-	  		  <p style='margin:0; display:block; float:right;'><strong>Price:</strong> <%= number_to_currency(item.price) %>$</p>
-	  			<div class="actions">
-	  			  <% if current_user.try(:admin?) %>
-	  				<br/><%= link_to 'Edit', edit_item_path(item) %>
-	  				<%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %>
-	  			  <% end %>
-	  			</div>
-	  	  </div>
-	    </div>
-	  <% end %>
+	<div class="responsive">
+		<% @item.artist.items.where.not(id: @item.id).each do |item| %>
+			<div style='text-align:center; margin-right:15px; margin-left:15px;'>
+				<%= link_to item do %> 
+					<%= image_tag item.image.url(:medium), style: "margin-right:auto; margin-left:auto;-webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);-moz-box-shadow:    7px 7px 5px 0px rgba(50, 50, 50, 0.75);box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75); margin-bottom:15px;" %>
+				<% end %>
+				<%= link_to item.name.capitalize, item, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; font-weight:bold; display:block; margin-bottom:0px;" %>
+      			<%= link_to item.artist.name.split.map(&:capitalize)*' ', item.artist, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; margin-top:0px; display:block;" %>
+			</div>
+		<% end %>
 	</div>
 <% end %>
+
+<div id='comments' style='margin-top:100px;'>
+	<h4 style='font-weight:bold; color:black;'>COMMENTS:</h4>
+	<div class='row'>
+		<div class='col-md-10' style='padding-right:0; padding-left:0;'>
+			<% @item.comments.each do |comment| %>
+				<div class='comment'>
+					<p style='color:black; font-weight:bold; font-size:110%; margin-left:20px;'><%= comment.user.name.split.map(&:capitalize)*' ' %></p>
+					<p style='margin-left:40px;'><%= comment.ccontent %></p>
+				</div>
+			<% end %>
+		</div>
+	</div>
+	<% if user_signed_in? %>
+		<%= form_for @commentbuild, :html => {class: 'form-group', style: 'margin-top:30px;'}, remote: true do |f| %>
+			<%= f.text_area :ccontent, :placeholder => 'Leave a comment here', class: 'form-control', style: 'resize:none; width:73.3%; height:100px; display:inline-block;-webkit-border-top-right-radius: 0;-webkit-border-bottom-right-radius: 0;-moz-border-radius-topright: 0;-moz-border-radius-bottomright: 0;border-top-right-radius: 0;border-bottom-right-radius: 0;' %><%= f.submit 'Leave Comment', class: 'btn btn-default leaveComment'%>
+			<%= f.hidden_field :item_id, :value => @item.id %>
+		<% end %>
+	<% else %>
+		<p>You need to be signed into your account to leave a comment.</p>
+	<% end %>
+</div>
 
 <script>
 var isotopeLaunch = function(){
@@ -156,12 +187,29 @@ var isotopeLaunch = function(){
       }
     });
 };
-imagesLoaded( 'img', isotopeLaunch);
 
-$("#<%= @item.name.gsub(/ /,'-') %>-image").imageLens({ imageSrc: "<%= @item.image.url %>" });
-<% @item.itemimages.each_with_index do |image, index| %>
-	$('#'+<%= index.to_s %>+"-image").imageLens({ imageSrc: "<%= image.image.url %>" });
-<% end %>
+var lensZoom = function(){
+	$("#<%= @item.name.gsub(/ /,'-') %>-image").imageLens({ imageSrc: "<%= @item.image.url %>" });
+	<% @item.itemimages.each_with_index do |image, index| %>
+		$('#'+<%= index.to_s %>+"-image").imageLens({ imageSrc: "<%= image.image.url %>" });
+	<% end %>
+};
+
+var slickCarousel = function(){
+  $('.responsive').slick({
+    dots: true,
+    arrows: true,
+    infinite: true,
+    variableWidth: true,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  }); 
+};
+
+imagesLoaded( 'img', isotopeLaunch);
+imagesLoaded( 'img', lensZoom);
+imagesLoaded( 'img', slickCarousel);
+
 $('.choose-image').on('click', function(){
 	$('.active').hide();
 	$('.active').removeClass();

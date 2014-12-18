@@ -9,14 +9,14 @@
     <li><%= link_to 'Pin', enamels_path(:theme => 'Pin'), style: 'font-weight:bold;' %></li>
     <li><%= link_to 'Ring', enamels_path(:theme => 'Ring'), style: 'font-weight:bold;' %></li>
     <li><%= link_to 'Other', enamels_path(:theme => 'Other'), style: 'font-weight:bold;' %></li>
-    <div style='display:inline-block; margin-left:40px;'>
+    <div style='display:inline-block; float:right;'>
       <% unless @theme.present? %>
         <%= form_tag(enamels_path, :id => "sort_select", method: :get) do %>
-          Sort By: <%= select_tag :sort_by, options_for_select(['Recently added',' Price low to high', 'Price high to low', 'Most Comments', 'Most Votes', 'Discounted Items', 'Sold Items'], disabled: "Most Votes"), :onchange => ("$('#sort_select').submit()") %>
+          <strong>Sort By:</strong> <%= select_tag :sort_by, options_for_select(['Recently added',' Price low to high', 'Price high to low', 'Most Comments', 'Most Votes', 'Discounted Items', 'Sold Items']), :onchange => ("$('#sort_select').submit()") %>
         <% end %>
       <% else %>
         <%= form_tag(enamels_path, :id => "sort_select", method: :get) do %>
-          Sort By: <%= select_tag :sort_by, options_for_select(['Recently added', 'Price low to high', 'Price high to low', 'Most Comments', 'Most Votes', 'Discounted Items', 'Sold Items'], disabled: "Most Votes"), :onchange => ("$('#sort_select').submit()") %>
+          <strong>Sort By:</strong> <%= select_tag :sort_by, options_for_select(['Recently added', 'Price low to high', 'Price high to low', 'Most Comments', 'Most Votes', 'Discounted Items', 'Sold Items']), :onchange => ("$('#sort_select').submit()") %>
           <%= hidden_field_tag :theme, @theme %>
         <% end %>
       <% end %>
@@ -33,14 +33,14 @@
     <li><%= link_to 'Pin', enamels_path(:theme => 'Pin', :sort_by => @sort_by), style: 'font-weight:bold;' %></li>
     <li><%= link_to 'Ring', enamels_path(:theme => 'Ring', :sort_by => @sort_by), style: 'font-weight:bold;' %></li>
     <li><%= link_to 'Other', enamels_path(:theme => 'Other', :sort_by => @sort_by), style: 'font-weight:bold;' %></li>
-    <div style='display:inline-block; margin-left:40px;'>
+    <div style='display:inline-block; float:right;'>
       <% unless @theme.present? %>
         <%= form_tag(enamels_path, :id => "sort_select", method: :get) do %>
-          Sort By: <%= select_tag :sort_by, options_for_select(['Recently added',' Price low to high', 'Price high to low', 'Most Comments', 'Most Votes', 'Discounted Items', 'Sold Items'], selected: @sort_by, disabled: "Most Votes"), :onchange => ("$('#sort_select').submit()") %>
+          <strong>Sort By:</strong> <%= select_tag :sort_by, options_for_select(['Recently added',' Price low to high', 'Price high to low', 'Most Comments', 'Most Votes', 'Discounted Items', 'Sold Items'], selected: @sort_by), :onchange => ("$('#sort_select').submit()") %>
         <% end %>
       <% else %>
         <%= form_tag(enamels_path, :id => "sort_select", method: :get) do %>
-          Sort By: <%= select_tag :sort_by, options_for_select(['Recently added', 'Price low to high', 'Price high to low', 'Most Comments', 'Most Votes', 'Discounted Items', 'Sold Items'], selected: @sort_by, disabled: "Most Votes"), :onchange => ("$('#sort_select').submit()") %>
+          <strong>Sort By:</strong> <%= select_tag :sort_by, options_for_select(['Recently added', 'Price low to high', 'Price high to low', 'Most Comments', 'Most Votes', 'Discounted Items', 'Sold Items'], selected: @sort_by), :onchange => ("$('#sort_select').submit()") %>
           <%= hidden_field_tag :theme, @theme %>
         <% end %>
       <% end %>
@@ -52,14 +52,14 @@
   <%= image_tag '/assets/loading.gif', style: 'margin-top:-150px;' %>
 </div>
 
-<div id="container" style='display:none;'>
+<div id="container" style='display:none; margin-left:auto; margin-right:auto;'>
   <% @items.each do |item| %>
     <div class='item' style='text-align:center; margin-right:20px; margin-left:20px; width:340px; margin-bottom:50px;'>
       <%= link_to item do %>
         <%= image_tag item.image.url(:medium), style: "margin-right:auto; margin-left:auto;-webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);-moz-box-shadow:    7px 7px 5px 0px rgba(50, 50, 50, 0.75);box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75); margin-bottom:15px;" %>
       <% end %>
       <%= link_to item.name.capitalize, item, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; font-weight:bold; display:block; margin-bottom:0px;" %>
-      <%= link_to item.artist.name.capitalize, item.artist, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; margin-top:0px; display:block;" %>
+      <%= link_to item.artist.name.split.map(&:capitalize)*' ', item.artist, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; margin-top:0px; display:block;" %>
     </div>
   <% end %>
 </div>

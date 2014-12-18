@@ -1,0 +1,15 @@
+<div id='likes' style='width:100%; text-align:right;'>
+		<% unless current_user.likes.find_by(:item_id => @item.id).present? %>
+  		<%= link_to likes_path(like: {:item_id => @item.id}), method: :post, remote: true do %>
+		  	<button class='btn btn-default' style='margin-bottom:10px; padding-left:0; padding-right:0; padding-top:3px; padding-bottom:3px; border-color:#444;'>
+		  		<div style='font-size:120%; border-bottom:solid; border-color:#444; border-width:1px; margin-bottom:3px;'><%= @item.likes.count %></div><i class="fa fa-thumbs-up fa-lg"></i><p style='margin-bottom:0; margin-left:12px; margin-right:12px;'>Like</p>
+		  	</button>
+		<% end %>
+	<% else %>
+  		<%= link_to like_path(current_user.likes.find_by(:item_id => @item.id)), method: :delete, remote: true do %>
+		  	<button class='btn btn-default' style='margin-bottom:10px; padding-left:0; padding-right:0; padding-top:3px; padding-bottom:3px; border-color:#444;'>
+		  		<div style='font-size:120%; border-bottom:solid; border-color:#444; border-width:1px; margin-bottom:3px;'><%= @item.likes.count %></div><i class="fa fa-thumbs-down fa-lg"></i><p style='margin-bottom:0; margin-left:12px; margin-right:12px;'>Unlike</p>
+		  	</button>
+		<% end %>
+	<% end %>
+</div>

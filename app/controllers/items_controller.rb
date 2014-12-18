@@ -11,6 +11,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @commentbuild = Comment.new
     respond_with(@item, @itemimagebuild = Itemimage.new, @itemimages = @item.itemimages)
   end
 

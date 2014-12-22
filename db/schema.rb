@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141217132009) do
+ActiveRecord::Schema.define(version: 20141222094456) do
 
   create_table "artists", force: true do |t|
     t.string   "name"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20141217132009) do
     t.datetime "image_updated_at"
     t.integer  "comments_count",     default: 0
     t.integer  "likes_count",        default: 0
+    t.string   "artist_name"
   end
 
   add_index "items", ["artist_id"], name: "index_items_on_artist_id"
@@ -134,6 +135,8 @@ ActiveRecord::Schema.define(version: 20141217132009) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "region"
+    t.string   "city"
   end
 
   add_index "userinfos", ["user_id"], name: "index_userinfos_on_user_id"
@@ -153,8 +156,12 @@ ActiveRecord::Schema.define(version: 20141217132009) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin",                  default: false
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 

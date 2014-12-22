@@ -1,10 +1,13 @@
 class PagesController < ApplicationController
 	
   def home
-      @items = Item.where(:sold_out => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
+      @q = Item.where(:sold_out => 0).search(params[:q])
+      @items = @q.result.order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
   end
 
   def paintings
+    @q = Item.where(:item_type => "Painting", :sold_out => 0).search(params[:q])
+
     if (params[:theme].present? && params[:sort_by].nil?)
       @theme = params[:theme]
       @items = Item.where(:item_type => "Painting", :item_tag => params[:theme], :sold_out => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
@@ -43,12 +46,16 @@ class PagesController < ApplicationController
       elsif params[:sort_by] == 'Sold Items'
          @items = Item.where(:item_type => "Painting", :item_tag => params[:theme], :sold_out => 1).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
       end
+    elsif params[:q].present?
+      @items = @q.result.order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
     else
       @items = Item.where(:item_type => "Painting", :sold_out => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
     end
   end
 
   def enamels
+    @q = Item.where(:item_type => "Enamel", :sold_out => 0).search(params[:q])
+
     if (params[:theme].present? && params[:sort_by].nil?)
       @theme = params[:theme]
       @items = Item.where(:item_type => "Enamel", :item_tag => params[:theme], :sold_out => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
@@ -87,6 +94,8 @@ class PagesController < ApplicationController
       elsif params[:sort_by] == 'Sold Items'
         @items = Item.where(:item_type => "Enamel", :item_tag => params[:theme], :sold_out => 1).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
       end
+    elsif params[:q].present?
+      @items = @q.result.order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
     else
       @items = Item.where(:item_type => "Enamel", :sold_out => 0).order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
     end

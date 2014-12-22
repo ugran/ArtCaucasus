@@ -9,22 +9,17 @@ $navbar-height: 60px;
 @import "bootstrap-sprockets";
 @import 'bootstrap';
 
-#notifications-bar{
-	border-bottom:solid;
-	border-bottom-width:1px;
-	margin:0;
-	text-align:center;
-	width:100%;
-	background-color:black;
-	color: White;
-	border-top:solid;
-	border-top-color:#4C4C4C;
-	border-top-width:1px;
-	padding:2px;
-}
-
 #page-after-navbar{
 
+}
+
+.breadcrumb{
+    -webkit-border-bottom-right-radius: 8px;
+    -webkit-border-bottom-left-radius: 8px;
+    -moz-border-radius-bottomright: 8px;
+    -moz-border-radius-bottomleft: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
 
 #add-image {

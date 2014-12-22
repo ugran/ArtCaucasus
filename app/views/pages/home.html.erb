@@ -1,33 +1,37 @@
-<div id="filters">
-    <div class='row'>
-      <div id='naxati' class='col-md-3 col-md-offset-3' style="text-align:center; padding-top:15px; padding-bottom:15px;">
-        <%= link_to "Browse Paintings".upcase, paintings_path, style: 'text-decoration:none; font-weight:bold; font-size:130%; color:#444;' %>
-      </div>
-      <div id='minankari' class='col-md-3 col-md-offset-1' style="text-align:center; padding-top:15px; padding-bottom:15px;">
-        <%= link_to "Browse Enamels".upcase, enamels_path, style: 'text-decoration:none; font-weight:bold; font-size:130%; color:#444;' %>
-      </div>
-    </div>
-</div>
-
 <div id='loading' style='width:100%; text-align:center;'>
   <%= image_tag '/assets/loading.gif', style: 'margin-top:-150px;' %>
 </div>
 
-<div id="container" style='display:none; margin-left:auto; margin-right:auto;'>
-  <% @items.each do |item| %>
-    <div class='item' style='text-align:center; margin-right:20px; margin-left:20px; width:340px; margin-bottom:50px;'>
-      <%= link_to item do %>
-        <%= image_tag item.image.url(:medium), style: "margin-right:auto; margin-left:auto;-webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);-moz-box-shadow:    7px 7px 5px 0px rgba(50, 50, 50, 0.75);box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75); margin-bottom:15px;" %>
-      <% end %>
-      <%= link_to item.name.capitalize, item, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; font-weight:bold; display:block; margin-bottom:0px;" %>
-      <%= link_to item.artist.name.split.map(&:capitalize)*' ', item.artist, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; margin-top:0px; display:block;" %>
-    </div>
-  <% end %>
-</div>
+<% if @items.present? %>
+  <div id="container" style='display:none; margin-left:auto; margin-right:auto;'>
+    <% @items.each do |item| %>
+      <div class='item' style='text-align:center; margin-right:20px; margin-left:20px; width:340px; margin-bottom:50px;'>
+        <%= link_to item do %>
+          <%= image_tag item.image.url(:medium), style: "margin-right:auto; margin-left:auto;-webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);-moz-box-shadow:    7px 7px 5px 0px rgba(50, 50, 50, 0.75);box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75); margin-bottom:15px;" %>
+        <% end %>
+        <%= link_to item.name.capitalize, item, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; font-weight:bold; display:block; margin-bottom:0px;" %>
+        <%= link_to item.artist.name.split.map(&:capitalize)*' ', item.artist, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; margin-top:0px; display:block;" %>
+      </div>
+    <% end %>
+  </div>
 
-<div style='text-align:center;'>
-   <%= will_paginate @items, renderer: BootstrapPagination::Rails %>
-</div>
+  <div style='text-align:center;'>
+     <%= will_paginate @items, renderer: BootstrapPagination::Rails %>
+  </div>
+<% else %>
+  <script>
+    var n = noty({
+      text: '<p style="width:100%; margin-top:15px; margin-bottom:15px; text-align:center; font-weight:bold; font-size:120%;">No such items found.</p>',
+      layout: 'topRight',
+      type: 'information',
+      animation: {
+        open: 'animated fadeInRight', // Animate.css class names
+        close: 'animated flipOutY', // Animate.css class names
+        speed: 500 // unavailable - no need
+      }
+    });
+    </script>
+<% end %>
 
 <script>
 var isotopeLaunch = function(){

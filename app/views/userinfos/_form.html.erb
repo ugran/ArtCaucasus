@@ -1,3 +1,59 @@
+<% states = Array[ ["AK", "Alaska"], 
+                ["AL", "Alabama"], 
+                ["AR", "Arkansas"], 
+                ["AS", "American Samoa"], 
+                ["AZ", "Arizona"], 
+                ["CA", "California"], 
+                ["CO", "Colorado"], 
+                ["CT", "Connecticut"], 
+                ["DC", "District of Columbia"], 
+                ["DE", "Delaware"], 
+                ["FL", "Florida"], 
+                ["GA", "Georgia"], 
+                ["GU", "Guam"], 
+                ["HI", "Hawaii"], 
+                ["IA", "Iowa"], 
+                ["ID", "Idaho"], 
+                ["IL", "Illinois"], 
+                ["IN", "Indiana"], 
+                ["KS", "Kansas"], 
+                ["KY", "Kentucky"], 
+                ["LA", "Louisiana"], 
+                ["MA", "Massachusetts"], 
+                ["MD", "Maryland"], 
+                ["ME", "Maine"], 
+                ["MI", "Michigan"], 
+                ["MN", "Minnesota"], 
+                ["MO", "Missouri"], 
+                ["MS", "Mississippi"], 
+                ["MT", "Montana"], 
+                ["NC", "North Carolina"], 
+                ["ND", "North Dakota"], 
+                ["NE", "Nebraska"], 
+                ["NH", "New Hampshire"], 
+                ["NJ", "New Jersey"], 
+                ["NM", "New Mexico"], 
+                ["NV", "Nevada"], 
+                ["NY", "New York"], 
+                ["OH", "Ohio"], 
+                ["OK", "Oklahoma"], 
+                ["OR", "Oregon"], 
+                ["PA", "Pennsylvania"], 
+                ["PR", "Puerto Rico"], 
+                ["RI", "Rhode Island"], 
+                ["SC", "South Carolina"], 
+                ["SD", "South Dakota"], 
+                ["TN", "Tennessee"], 
+                ["TX", "Texas"], 
+                ["UT", "Utah"], 
+                ["VA", "Virginia"], 
+                ["VI", "Virgin Islands"], 
+                ["VT", "Vermont"], 
+                ["WA", "Washington"], 
+                ["WI", "Wisconsin"], 
+                ["WV", "West Virginia"], 
+                ["WY", "Wyoming"] ] %>
+
 <%= form_for @userinfobuild, html: { multipart: true } do |f| %>
   <% if @userinfobuild.errors.any? %>
     <div id="error_explanation">
@@ -23,7 +79,17 @@
 
   <div class="form-group">
     <%= f.label :country %><br>
-    <%= f.select :country, [ 'United states', 'Canada' ], class: "form-control" %>
+    <%= f.select :country, [ 'United states'], class: "form-control" %> (At the moment we only ship to United States).
+  </div>
+
+  <div class="form-group">
+    <%= f.label 'State' %><br>
+    <%= f.select :region, states, prompt: 'Select State', class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :city %><br>
+    <%= f.text_field :city, class: "form-control" %>
   </div>
 
   <div class="form-group">
@@ -37,11 +103,41 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :zipcode %><br>
-    <%= f.text_field :zipcode, class: "form-control" %>
+    <label for="userinfo_zipcode">Zipcode</label><br>
+    <input id='zipcode' class="form-control" id="userinfo_zipcode" name="userinfo[zipcode]" type="text">
   </div>
+  <p id='zip-invalid' style='display:none; width:100%; text-align:center; color:red;'>Zip code is invalid.</p>
 
-  <div class="form-group">
-    <%= f.submit 'Edit User Information', class: "btn btn-primary" %>
+  <div id='submit' class="form-group">
+    <%= f.submit 'Submit', class: "btn btn-primary", style: 'width:100%;' %>
+  </div>
+  <div id="no-submit" class="form-group" style='display:none;'>
+    <input style='width:100%;' class="btn btn-default" value="Please Enter Valid Zip Code">
   </div>
 <% end %>
+
+<script>
+  $(document).ready(function(){
+    var delay = (function(){
+      var timer = 0;
+      return function(callback, ms){
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+      };
+    })();
+   $( "#zipcode" ).keyup(function() {
+    delay(function(){
+     var pattern = /(\d{5}([ \-]\d{4})?)/;
+      if (!pattern.test($('#zipcode').val())) {
+        $('#submit').hide();
+        $('#no-submit').show();
+        $('#zip-invalid').show();
+      }else{
+        $('#no-submit').hide();
+        $('#zip-invalid').hide();
+        $('#submit').show();
+      }
+    }, 1000 );
+   });
+  });
+</script>

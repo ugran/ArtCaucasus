@@ -81,5 +81,17 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 	
 	#required for heroku
-	config.action_mailer.default_url_options = { :host => 'http://artiveria.com' }
+	config.action_mailer.default_url_options = { :host => 'artiveria.com'}
+
+config.action_mailer.delivery_method = :smtp
+
+config.action_mailer.smtp_settings = {
+  :address              => "smtp.mandrillapp.com",
+  :port                 => 587,
+  :domain               => "artiveria.com",
+  :user_name            => "iraklikori@gmail.com",
+  :password             => "jATKRtyfdKKoke3kjVrgaA",
+  :authentication       => "plain",
+  :enable_starttls_auto => true
+}
 end

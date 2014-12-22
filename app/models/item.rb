@@ -1,4 +1,6 @@
 class Item < ActiveRecord::Base
+	after_create :update_artist_name
+
 	has_many :itemimages
 	has_many :orders
 	has_many :carts
@@ -15,6 +17,10 @@ class Item < ActiveRecord::Base
 
 	def to_param
 		"#{id}-artist:#{self.artist.name}-art:#{name.gsub(/ /,"-")}"
+	end
+
+	def update_artist_name
+		self.update_attribute :artist_name, Artist.find(self.artist_id).name
 	end
 
 end

@@ -11,7 +11,7 @@ class CartsController < ApplicationController
     shipping_cost = 150*weight
   	@cart = Cart.new(:user_id => cart_params[:user_id], :item_id => cart_params[:item_id], :item_price => Item.find_by(id: cart_params[:item_id]).price, :shipping_cost => shipping_cost)
     @cart.save
-    redirect_to carts_path
+    redirect_to carts_path, notice: @cart.item.name+' has been added to your Cart.'
   end
 
   def destroy

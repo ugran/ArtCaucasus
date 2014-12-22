@@ -10,20 +10,26 @@
 <body>
 
 <%= render 'layouts/header' %>
-<% if current_page?(root_path) %>
-  
+<% flash.each do |name, msg| %>
+    <script>
+    var n = noty({
+      text: '<p style="width:100%; margin-top:15px; margin-bottom:15px; text-align:center; font-weight:bold; font-size:120%;"><%= msg %></p>',
+      layout: 'topRight',
+      type: 'information',
+      animation: {
+        open: 'animated fadeInRight', // Animate.css class names
+        close: 'animated flipOutY', // Animate.css class names
+        speed: 500 // unavailable - no need
+      }
+    });
+    </script>
 <% end %>
-<div class="container">
+<% if current_page?(root_path) %>
+  <%= render "layouts/carousel" %>
+<% end %>
+<div id="page-after-navbar" class="container">
 
-	<% flash.each do |name, msg| %>
-    <div id="notifications-bar">
-     <%= content_tag(:div, msg) %>
-    </div>
-	<% end %>
-	
-  <div id="page-after-navbar">
-	 <%= yield %>
-  </div>
+	<%= yield %>
 	
 </div>
 

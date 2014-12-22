@@ -13,7 +13,7 @@ class UserinfosController < ApplicationController
   def create
   	@userinfo = Userinfo.new(:firstname => userinfo_params[:firstname], :lastname => userinfo_params[:lastname], :country => userinfo_params[:country], :phone => userinfo_params[:phone], :address => userinfo_params[:address], :zipcode => userinfo_params[:zipcode], :user_id => current_user.id)
     @userinfo.save
-    redirect_to :back
+    redirect_to :back, notice: 'Your user-information has been updated successfully.'
   end
 
   def update

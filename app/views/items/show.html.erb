@@ -78,22 +78,56 @@
 	  </div>
 	  <div class="col-md-4">
 	  	<div id='likes' style='width:100%; text-align:right;'>
+	  	<% if user_signed_in? %>
 	  		<% unless current_user.likes.find_by(:item_id => @item.id).present? %>
 		  		<%= link_to likes_path(like: {:item_id => @item.id}), method: :post, remote: true do %>
 				  	<button class='btn btn-default' style='margin-bottom:10px; padding-left:0; padding-right:0; padding-top:3px; padding-bottom:3px; border-color:#444;'>
-				  		<div style='font-size:120%; border-bottom:solid; border-color:#444; border-width:1px; margin-bottom:3px;'><%= @item.likes_count %></div><i class="fa fa-thumbs-up fa-lg"></i><p style='margin-bottom:0; margin-left:12px; margin-right:12px;'>Like</p>
+				  		<div style='font-size:120%; border-bottom:solid; border-color:#444; border-width:1px; margin-bottom:3px;'><%= @item.likes_count %></div><i class="fa fa-thumbs-up fa-lg"></i><p style='margin-bottom:0; margin-left:5px; margin-right:5px;'>Like</p>
 				  	</button>
 				<% end %>
 			<% else %>
 		  		<%= link_to like_path(current_user.likes.find_by(:item_id => @item.id)), method: :delete, remote: true do %>
 				  	<button class='btn btn-default' style='margin-bottom:10px; padding-left:0; padding-right:0; padding-top:3px; padding-bottom:3px; border-color:#444;'>
-				  		<div style='font-size:120%; border-bottom:solid; border-color:#444; border-width:1px; margin-bottom:3px;'><%= @item.likes_count %></div><i class="fa fa-thumbs-down fa-lg"></i><p style='margin-bottom:0; margin-left:12px; margin-right:12px;'>Unlike</p>
+				  		<div style='font-size:120%; border-bottom:solid; border-color:#444; border-width:1px; margin-bottom:3px;'><%= @item.likes_count %></div><i class="fa fa-thumbs-down fa-lg"></i><p style='margin-bottom:0; margin-left:5px; margin-right:5px;'>Unlike</p>
 				  	</button>
 				<% end %>
 			<% end %>
+		<% else %>
+			<button id='not-logged-in' class='btn btn-default' style='margin-bottom:10px; padding-left:0; padding-right:0; padding-top:3px; padding-bottom:3px; border-color:#444;'>
+		  		<div style='font-size:120%; border-bottom:solid; border-color:#444; border-width:1px; margin-bottom:3px;'><%= @item.likes_count %></div><i class="fa fa-thumbs-up fa-lg"></i><p style='margin-bottom:0; margin-left:5px; margin-right:5px;s'>Likes</p>
+		  		<script>
+		  			$('#not-logged-in').on('click', function(){
+			  			  var n = noty({
+					      text: 'You need to sign into your account to vote.',
+					      layout: 'topRight',
+					      type: 'warning',
+					      animation: {
+					        open: 'animated fadeInRight', // Animate.css class names
+					        close: 'animated flipOutY', // Animate.css class names
+					        speed: 500 // unavailable - no need
+					      },
+					      buttons: [
+								{addClass: 'btn btn-primary', text: 'Sing-in', onClick: function($noty) {
+
+										// this = button element
+										// $noty = $noty element
+
+										$noty.close();
+										window.location.replace('http://artiveria.com/users/sign_in');
+									}
+								},
+								{addClass: 'btn btn-danger', text: 'Cancel', onClick: function($noty) {
+										$noty.close();
+									}
+								}
+							]
+					    });
+				    });
+		  		</script>
+		  	</button>
+		<% end %>
 		</div>
-		<div style='margin-bottom:5px; height:1px; width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px;'></div>
-	  	<p style='font-weight:bold;'>Choose Images:</p>
+	  	<p style='font-weight:bold; margin-top:5px;'>Choose Images:</p>
 	  	<div class='choose-image' id='<%= @item.name.gsub(/ /,"-")+"-show" %>'>
 	  		<%= image_tag @item.image.url(:small), style: "cursor:pointer;" %>
 	  	</div>
@@ -168,8 +202,6 @@
 			<%= f.text_area :ccontent, :placeholder => 'Leave a comment here', class: 'form-control', style: 'resize:none; width:73.3%; height:100px; display:inline-block;-webkit-border-top-right-radius: 0;-webkit-border-bottom-right-radius: 0;-moz-border-radius-topright: 0;-moz-border-radius-bottomright: 0;border-top-right-radius: 0;border-bottom-right-radius: 0;' %><%= f.submit 'Leave Comment', class: 'btn btn-default leaveComment'%>
 			<%= f.hidden_field :item_id, :value => @item.id %>
 		<% end %>
-	<% else %>
-		<p>You need to be signed into your account to leave a comment.</p>
 	<% end %>
 </div>
 

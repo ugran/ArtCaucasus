@@ -29,7 +29,7 @@ class UserinfosController < ApplicationController
     end
 
     def userinfo_params
-      params.require(:userinfo).permit(:firstname, :lastname, :country, :phone, :address, :zipcode)
+      params.require(:userinfo).permit(:firstname, :lastname, :country, :phone, :address, :zipcode, :city, :region)
     end
 
 end

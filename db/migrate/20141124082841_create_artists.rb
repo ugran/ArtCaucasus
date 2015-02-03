@@ -3,6 +3,7 @@ class CreateArtists < ActiveRecord::Migration
     create_table :artists do |t|
       t.string :name
       t.text :description
+      t.text :rmore
       t.string :specialization
       t.string :country
       t.string :manager

@@ -49,85 +49,20 @@
 	</script>
 <% end %>
 
-<h3 style='margin-bottom:20px;'>"<%= @item.name %>" by <%= @item.artist.name %> <% if @item.date_of_creation.present? %>, <%= @item.date_of_creation %> <% end %></h3>
+<h3 style='margin-bottom:20px; margin-left:20px; margin-right:25px;'>"<%= @item.name %>" by <%= link_to @item.artist, style: 'text-decoration:none; color:#484848;' do %><%= @item.artist.name %><% end %><% if @item.date_of_creation.present? %>, <%= @item.date_of_creation %> <% end %></h3>
 
 <div class='container' oncontextmenu="return false">
 	<div class="row">
 	  <div class="col-md-8">
 	  	<div id='image-place'>
-	  		<%= image_tag @item.image.url(:large), {class: "active", id: @item.name.gsub(/ /,'-')+"-image"} %>
+	  		<%= image_tag @item.image.url(:large), {class: "active", style: "width:100%;", id: @item.name.gsub(/ /,'-')+"-image"} %>
 	  		<% @item.itemimages.each_with_index do |image, index| %>
-	  			<%= image_tag image.image.url(:large), id: index.to_s+"-image", style: "display:none;" %>
+	  			<%= image_tag image.image.url(:large), id: index.to_s+"-image", style: "display:none; width:100%;" %>
 	  		<% end %>
 	  	</div>
-	  	<div id='paramenters'>
-	  		<p id='item-type'><strong>Type:</strong> <%= @item.item_type %></p>
-	  		<p id='item-dimensions'>, <strong>Dimensions:</strong> <%= @item.height %>x<%= @item.width %>x<%= @item.width2 %></p>
-	  		<p id='item-dimensions'>, <strong>Shape:</strong> <%= @item.shape %></p>
-	  	</div>
-	  	<% if @item.description.present? %>
-		  	<p id='description'>
-		  		<strong>Description:</strong> <%= @item.description %>
-		  	</p>
-		<% end %>
-		<% if @item.additional_info.present? %>
-			<p id='additional-info'>
-				<strong>Additional info:</strong> <%= @item.additional_info %>
-			</p>
-		<% end %>
 	  </div>
 	  <div class="col-md-4">
-	  	<div id='likes' style='width:100%; text-align:right;'>
-	  	<% if user_signed_in? %>
-	  		<% unless current_user.likes.find_by(:item_id => @item.id).present? %>
-		  		<%= link_to likes_path(like: {:item_id => @item.id}), method: :post, remote: true do %>
-				  	<button class='btn btn-default' style='margin-bottom:10px; padding-left:0; padding-right:0; padding-top:3px; padding-bottom:3px; border-color:#444;'>
-				  		<div style='font-size:120%; border-bottom:solid; border-color:#444; border-width:1px; margin-bottom:3px;'><%= @item.likes_count %></div><i class="fa fa-thumbs-up fa-lg"></i><p style='margin-bottom:0; margin-left:5px; margin-right:5px;'>Like</p>
-				  	</button>
-				<% end %>
-			<% else %>
-		  		<%= link_to like_path(current_user.likes.find_by(:item_id => @item.id)), method: :delete, remote: true do %>
-				  	<button class='btn btn-default' style='margin-bottom:10px; padding-left:0; padding-right:0; padding-top:3px; padding-bottom:3px; border-color:#444;'>
-				  		<div style='font-size:120%; border-bottom:solid; border-color:#444; border-width:1px; margin-bottom:3px;'><%= @item.likes_count %></div><i class="fa fa-thumbs-down fa-lg"></i><p style='margin-bottom:0; margin-left:5px; margin-right:5px;'>Unlike</p>
-				  	</button>
-				<% end %>
-			<% end %>
-		<% else %>
-			<button id='not-logged-in' class='btn btn-default' style='margin-bottom:10px; padding-left:0; padding-right:0; padding-top:3px; padding-bottom:3px; border-color:#444;'>
-		  		<div style='font-size:120%; border-bottom:solid; border-color:#444; border-width:1px; margin-bottom:3px;'><%= @item.likes_count %></div><i class="fa fa-thumbs-up fa-lg"></i><p style='margin-bottom:0; margin-left:5px; margin-right:5px;s'>Likes</p>
-		  		<script>
-		  			$('#not-logged-in').on('click', function(){
-			  			  var n = noty({
-					      text: 'You need to sign into your account to vote.',
-					      layout: 'topRight',
-					      type: 'warning',
-					      animation: {
-					        open: 'animated fadeInRight', // Animate.css class names
-					        close: 'animated flipOutY', // Animate.css class names
-					        speed: 500 // unavailable - no need
-					      },
-					      buttons: [
-								{addClass: 'btn btn-primary', text: 'Sing-in', onClick: function($noty) {
-
-										// this = button element
-										// $noty = $noty element
-
-										$noty.close();
-										window.location.replace('http://artiveria.com/users/sign_in');
-									}
-								},
-								{addClass: 'btn btn-danger', text: 'Cancel', onClick: function($noty) {
-										$noty.close();
-									}
-								}
-							]
-					    });
-				    });
-		  		</script>
-		  	</button>
-		<% end %>
-		</div>
-	  	<p style='font-weight:bold; margin-top:5px;'>Choose Images:</p>
+	  	<p style='font-weight:bold;'>Choose Images:</p>
 	  	<div class='choose-image' id='<%= @item.name.gsub(/ /,"-")+"-show" %>'>
 	  		<%= image_tag @item.image.url(:small), style: "cursor:pointer;" %>
 	  	</div>
@@ -138,65 +73,166 @@
 				</div>
 			<% end %>
 		<% end %>
-		<% if @item.price.present? %>
-			<div id='price-place'>
-				<p style='display:inline-block; font-size:150%; font-weight:bold; margin-bottom:0;'>Price:</p>
-				<p style='display:inline-block; font-size:150%; font-weight:bold; margin-left:10px; margin-bottom:0;'><%= number_to_currency(@item.price) %></p>
-				<p style='display:inline-block; font-size:150%; font-weight:bold; margin-left:3px; margin-bottom:0;'>$</p>
-				<% if @item.quantity.present? %>
-					<div style='margin:0; height:1px; width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px;'></div>
-					<p style='display:block; font-size:120%; margin-top:2px; margin-bottom:5px;'><strong>Quantity:</strong> <%= @item.quantity %></p>
-				<% end %>
-				<div style='margin:0; height:1px; width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px; margin-top:5px;'></div>
-				<% if user_signed_in? %>
-					<% unless current_user.carts.find_by(item_id: @item.id).present? %>
-						<%= link_to carts_path( :cart => { :item_id => @item.id, :user_id => current_user.id}), style: 'text-decoration:none;', :method => :post do %>
-							<button class='btn btn-default' style='float:right; margin-top:10px;'><span class='glyphicon glyphicon-shopping-cart'></span> Add to cart
-							</button>
+		<div id='paramenters'>
+			<% if @item.description.present? %>
+			  	<p id='description'>
+			  		<strong>Description:</strong> <%= @item.description %>
+			  	</p>
+			<% end %>
+			<% if @item.additional_info.present? %>
+				<p id='additional-info'>
+					<strong>Additional info:</strong> <%= @item.additional_info %>
+				</p>
+			<% end %>
+			<% if @item.dimensions.present? %>
+	  			<p id='item-dimensions'><strong>Dimensions:</strong> <%= @item.dimensions %></p>
+	  		<% end %>
+	  	</div>
+	  	<% unless @item.sold_out == 1 %>
+			<% if @item.price.present? %>
+				<div id='price-place'>
+					<p style='display:inline-block; font-size:150%; font-weight:bold; margin-bottom:0;'>Price:</p>
+					<p style='display:inline-block; font-size:150%; margin-left:10px; margin-bottom:0;'><%= number_to_currency(@item.price) %></p>
+					<p style='display:inline-block; font-size:150%; font-weight:bold; margin-left:3px; margin-bottom:0;'></p>
+					<% if @item.shipping.present? %>
+						<div style='margin:0; height:1px; width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px;'></div>
+						<p style='display:block; font-size:120%; margin-top:2px; margin-bottom:5px;'><strong>Shipping:</strong> <%= number_to_currency(@item.shipping) %></p>
+					<% end %>
+					<% if @item.quantity.present? %>
+						<div style='margin:0; height:1px; width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px;'></div>
+						<p style='display:block; font-size:120%; margin-top:2px; margin-bottom:5px;'><strong>Quantity:</strong> <%= @item.quantity %></p>
+					<% end %>
+					<div style='margin:0; height:1px; width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px; margin-top:5px;'></div>
+					<% unless (@item.price+@item.shipping.to_i) > 10000 %>
+						<% if user_signed_in? %>
+							<% unless current_user.carts.find_by(item_id: @item.id).present? %>
+									<%= link_to carts_path( :cart => { :item_id => @item.id, :user_id => current_user.id}), style: 'text-decoration:none;', :method => :post do %>
+										<button class='btn btn-default' style='width:100%; text-align:center; margin-top:10px;'><span class='glyphicon glyphicon-shopping-cart'></span> Add to cart
+										</button>
+									<% end %>
+							<% else %>
+								<p style='width:100%; text-align:center; margin-top:10px; border:dashed; border-width:1px; padding:5px; margin-bottom:0px;'>This item is already in your cart</p>
+							<% end %>
+						<% else %>
+							<% if session[:carts].present? %>
+								<% unless session[:carts].include? @item.id.to_s %>
+									<%= link_to carts_path( :session_cart => @item.id), style: 'text-decoration:none;' do %>
+										<button class='btn btn-default' style='width:100%; text-align:center; margin-top:10px;'><span class='glyphicon glyphicon-shopping-cart'></span> Add to cart
+										</button>
+									<% end %>
+								<% else %>
+									<p style='width:100%; text-align:center; margin-top:10px; border:dashed; border-width:1px; padding:5px; margin-bottom:0px;'>This item is already in your cart</p>
+								<% end %>
+							<% else %>
+								<%= link_to carts_path( :session_cart => @item.id), style: 'text-decoration:none;' do %>
+									<button class='btn btn-default' style='width:100%; text-align:center; margin-top:10px;'><span class='glyphicon glyphicon-shopping-cart'></span> Add to cart
+									</button>
+								<% end %>
+							<% end %>
 						<% end %>
 					<% else %>
-						<p style='float:right; margin-top:10px; border:dashed; border-width:1px; padding:5px;'>This item is already in your cart</p>
+						<p style='width:100%; text-align:center; margin-top:10px; border:dashed; border-width:1px; padding:5px; margin-bottom:0px;'>As this item costs more than 10,000, please contact us with email: info@artiveria.com, or by phone:****-****-**** to arrange purchase of this Item</p>
+					<% end %>
+				</div>
+			<% end %>
+		<% else %>
+			<p style='width:100%; text-align:center; margin-top:10px; border:dashed; border-width:1px; padding:5px; margin-bottom:0px;'>This item has already been sold out.</p>
+		<% end %>
+			<div id='likes'>
+			  	<% if user_signed_in? %>
+		  			<% unless current_user.likes.find_by(:item_id => @item.id).present? %>
+				  		<%= link_to likes_path(like: {:item_id => @item.id}), style: 'text-decoration:none; color:#484848;', method: :post, remote: true do %>
+				  			<button class='btn btn-default' style='width:100%; text-align:center; margin-top:10px'>
+						  		<i class="fa fa-heart fa-lg" style='color:#c0392b;'></i> Remove from favorites
+						  	</button>
+						<% end %>
+					<% else %>
+				  		<%= link_to like_path(current_user.likes.find_by(:item_id => @item.id)), style: 'text-decoration:none; color:#484848;', method: :delete, remote: true do %>
+				  			<button class='btn btn-default' style='width:100%; text-align:center; margin-top:10px'>
+						  		<i class="fa fa-heart fa-lg" style='color:#484848;'></i> Add to favorites
+						  	</button>
+						<% end %>
 					<% end %>
 				<% else %>
-					<p style='float:right; margin-top:10px; border:dashed; border-width:1px; padding:5px;'>You need to sign into your account in order to purchase this item</p>
+					<button id='not-logged-in' class='btn btn-default' style='width:100%; text-align:center; margin-top:10px'>
+				  		<i class="fa fa-heart fa-lg" style='color:#484848;'></i> Add to favorites
+				  	</button>
+				  		<script>
+				  			$('#not-logged-in').on('click', function(){
+					  			  var n = noty({
+							      text: 'You need to sign into your account to vote.',
+							      layout: 'topRight',
+							      type: 'warning',
+							      animation: {
+							        open: 'animated fadeInRight', // Animate.css class names
+							        close: 'animated flipOutY', // Animate.css class names
+							        speed: 500 // unavailable - no need
+							      },
+							      buttons: [
+										{addClass: 'btn btn-primary', text: 'Sing-in', onClick: function($noty) {
+
+												// this = button element
+												// $noty = $noty element
+
+												$noty.close();
+												window.location.replace('http://artiveria.com/users/sign_in');
+											}
+										},
+										{addClass: 'btn btn-danger', text: 'Cancel', onClick: function($noty) {
+												$noty.close();
+											}
+										}
+									]
+							    });
+						    });
+				  		</script>
 				<% end %>
+			<div style='width:100%; text-align:center;'>
+					<div class="fb-like" data-colorscheme='dark' data-send="true" data-width="280" data-show-faces="true" style='margin-top:10px;'></div>
 			</div>
-		<% end %>
+			</div>
 	  </div>
 	</div>
 </div>
 
 <% if @item.artist.items.where.not(id: @item.id).present? %>
-	<div style='width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px; margin-bottom:10px; margin-top:20px;'></div>
+	<div style='width:100%; border-top:solid; border-top-color:#CCCCCC; border-top-width:1px; margin-bottom:10px; margin-top:20px;'></div>
 
-	<p style='margin-bottom:20px; font-size:150%; font-weight:bold;'>
+	<p style='margin-bottom:20px; font-size:150%; font-weight:bold; margin-left:25px; margin-right:25px;'>
 		More from <%= @item.artist.name %>:
 	</p>
-	<div class="responsive">
-		<% @item.artist.items.where.not(id: @item.id).each do |item| %>
-			<div style='text-align:center; margin-right:15px; margin-left:15px;'>
-				<%= link_to item do %> 
-					<%= image_tag item.image.url(:medium), style: "margin-right:auto; margin-left:auto;-webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);-moz-box-shadow:    7px 7px 5px 0px rgba(50, 50, 50, 0.75);box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75); margin-bottom:15px;" %>
-				<% end %>
-				<%= link_to item.name.capitalize, item, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; font-weight:bold; display:block; margin-bottom:0px;" %>
-      			<%= link_to item.artist.name.split.map(&:capitalize)*' ', item.artist, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; margin-top:0px; display:block;" %>
-			</div>
-		<% end %>
-	</div>
-<% end %>
-
-<div id='comments' style='margin-top:100px;'>
-	<h4 style='font-weight:bold; color:black;'>COMMENTS:</h4>
-	<div class='row'>
-		<div class='col-md-10' style='padding-right:0; padding-left:0;'>
-			<% @item.comments.each do |comment| %>
-				<div class='comment'>
-					<p style='color:black; font-weight:bold; font-size:110%; margin-left:20px;'><%= comment.user.name.split.map(&:capitalize)*' ' %></p>
-					<p style='margin-left:40px;'><%= comment.ccontent %></p>
+	<div class='on-top-of-responsive'>
+		<div class="responsive">
+			<% @item.artist.items.where.not(id: @item.id).each do |item| %>
+				<div style='text-align:center; margin-right:15px; margin-left:15px;'>
+					<%= link_to item do %> 
+						<%= image_tag item.image.url(:medium), style: "margin-right:auto; margin-left:auto;-webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);-moz-box-shadow:    7px 7px 5px 0px rgba(50, 50, 50, 0.75);box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75); margin-bottom:15px;" %>
+					<% end %>
+					<%= link_to item.name.capitalize, item, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; font-weight:bold; display:block; margin-bottom:0px;" %>
+	      			<%= link_to item.artist.name.split.map(&:capitalize)*' ', item.artist, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; margin-top:0px; display:block;" %>
+	      			<% if item.price.present? %><div class='price'><%= '$ '+item.price.to_s %></div><% end %>
 				</div>
 			<% end %>
 		</div>
 	</div>
+<% end %>
+
+<div id='comments' style='margin-top:100px;'>
+  <% if @item.comments.present? %>
+	<h4 style='font-weight:bold; color:#484848;'>COMMENTS:</h4>
+	<div class='row'>
+		<div class='col-md-10' style='padding-right:0; padding-left:0;'>
+			<% @item.comments.each do |comment| %>
+				<% if comment.user.present? %>
+					<div class='comment'>
+						<p style='color:black; font-weight:bold; font-size:110%; margin-left:20px;'><%= comment.user.name.split.map(&:capitalize)*' ' %></p>
+						<p style='margin-left:40px;'><%= comment.ccontent %></p>
+					</div>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+  <% end %>
 	<% if user_signed_in? %>
 		<%= form_for @commentbuild, :html => {class: 'form-group', style: 'margin-top:30px;'}, remote: true do |f| %>
 			<%= f.text_area :ccontent, :placeholder => 'Leave a comment here', class: 'form-control', style: 'resize:none; width:73.3%; height:100px; display:inline-block;-webkit-border-top-right-radius: 0;-webkit-border-bottom-right-radius: 0;-moz-border-radius-topright: 0;-moz-border-radius-bottomright: 0;border-top-right-radius: 0;border-bottom-right-radius: 0;' %><%= f.submit 'Leave Comment', class: 'btn btn-default leaveComment'%>
@@ -206,20 +242,6 @@
 </div>
 
 <script>
-var isotopeLaunch = function(){
-  var $container = $('#container');
-    // init
-    $container.isotope({
-      // options
-      itemSelector: '.item',
-      layoutMode: 'masonry',
-      masonry: {
-        columnWidth: 50,
-        isFitWidth: true
-      }
-    });
-};
-
 var lensZoom = function(){
 	$("#<%= @item.name.gsub(/ /,'-') %>-image").imageLens({ imageSrc: "<%= @item.image.url %>" });
 	<% @item.itemimages.each_with_index do |image, index| %>
@@ -238,9 +260,13 @@ var slickCarousel = function(){
   }); 
 };
 
-imagesLoaded( 'img', isotopeLaunch);
 imagesLoaded( 'img', lensZoom);
 imagesLoaded( 'img', slickCarousel);
+
+$(window).resize(function(){
+	$('.undefined').remove();
+	lensZoom();
+});
 
 $('.choose-image').on('click', function(){
 	$('.active').hide();

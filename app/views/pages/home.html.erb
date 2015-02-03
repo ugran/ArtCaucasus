@@ -11,6 +11,7 @@
         <% end %>
         <%= link_to item.name.capitalize, item, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; font-weight:bold; display:block; margin-bottom:0px;" %>
         <%= link_to item.artist.name.split.map(&:capitalize)*' ', item.artist, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; margin-top:0px; display:block;" %>
+        <% if item.price.present? %><div class='price'><%= '$ '+item.price.to_s %></div><% end %>
       </div>
     <% end %>
   </div>
@@ -52,16 +53,28 @@ imagesLoaded( 'img', function(){
 
 $(document).ready(function(){
   $('#minankari').find('a').mouseenter(function(){
-    $(this).css("font-size", '140%');
+    $(this).css("font-size", '130%');
   });
   $('#minankari').find('a').mouseleave(function(){
-    $(this).css("font-size", "130%");
+    $(this).css("font-size", "120%");
   });
   $('#naxati').find('a').mouseenter(function(){
-    $(this).css("font-size", '140%');
+    $(this).css("font-size", '130%');
   });
   $('#naxati').find('a').mouseleave(function(){
-    $(this).css("font-size", "130%");
+    $(this).css("font-size", "120%");
+  });
+  $('#nacheri').find('a').mouseenter(function(){
+    $(this).css("font-size", '130%');
+  });
+  $('#nacheri').find('a').mouseleave(function(){
+    $(this).css("font-size", "120%");
+  });
+  $('#kandakeba').find('a').mouseenter(function(){
+    $(this).css("font-size", '130%');
+  });
+  $('#kandakeba').find('a').mouseleave(function(){
+    $(this).css("font-size", "120%");
   });
 });
 </script>

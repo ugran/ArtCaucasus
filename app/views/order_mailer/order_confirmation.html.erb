@@ -1,0 +1,16 @@
+<% item_array = @order.p_item_number.split('|').collect{ |s| s.to_i } %>
+
+<p>You have placed an order at Artiveria.com.</p>
+
+<strong>Your order number is:</strong> <%= @order.p_invoice_number %>
+
+<p>You have bought:</p>
+    <%  item_array.each do |item| %>
+       <a href="http://artiveria.com/items/<%=item%>">
+       	<%= Item.find(item).name %><br/><br/>
+       </a>
+    <% end %>
+
+<p>We will send you an email with shipping information as soon as we finish processing your order</p>
+
+<p>Thank you and please feel free to contact us on customerservice@artiveria.com for more information.</p>

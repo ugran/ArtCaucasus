@@ -1,0 +1,11 @@
+<h1>Editing item</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @item %> |
+<%= link_to 'Back', items_path %>
+
+<%= form_tag('/carousels/'+@carousel.id.to_s+'/edit', :method => :get) do %>
+	<%= select_tag :artist_id, options_from_collection_for_select(Artist.all, "id", "name") %>
+	<%= submit_tag('Find') %>
+<% end %>

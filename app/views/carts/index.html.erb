@@ -20,19 +20,19 @@
 				</div>
 				<div class="col-md-3 cart-column" style='display:table;'>
 					<p style='display:table-cell; vertical-align:middle; font-size:110%;'>
-						<strong>Price:</strong> <%= number_to_currency(cart.item_price) %>$<br/>
-						<strong>Shipping Cost:</strong> <%= number_to_currency(cart.shipping_cost) %>$<br/>
+						<strong>Price:</strong> <%= number_to_currency(cart.item_price) %><br/>
+						<strong>Shipping Cost:</strong> <%= number_to_currency(cart.shipping_cost) %><br/>
 						<% if cart.item.quantity.present? %>
 							<strong>Available Quantity:</strong> <%= cart.item.quantity %><br/>
 						<% end %>
 						<% total = cart.item_price + cart.shipping_cost %>
-						<strong>Total:</strong> <%= number_to_currency(total) %>$
+						<strong>Total:</strong> <%= number_to_currency(total) %>
 					</p>
 				</div>
 				<div class="col-md-2 cart-column" style='display:table; text-align:center;'>
-					<%= link_to cart, style: 'display:table-cell; vertical-align:middle;', :method => :delete do %>
-						<button class='btn btn-default'>Remove</button>
-					<% end %>
+						<%= link_to cart, style: 'display:table-cell; vertical-align:middle;', :method => :delete do %>
+							<button class='btn btn-default'>Remove</button>
+						<% end %>
 				</div>
 			</div>
 			<% if index != @carts.length-1 %>
@@ -44,27 +44,90 @@
 	</div>
 	<div class='row'>
 		<div class='col-md-6'>
-			<h3>Shipping information:</h3>
-			<% unless current_user.userinfo.present? %>
-
-			<% else %>
-				<strong>Name:</strong> <%= current_user.userinfo.firstname if current_user.userinfo.firstname.present? %> <%= current_user.userinfo.lastname if current_user.userinfo.lastname.present? %><br/>
-				<strong>Country:</strong> <%= current_user.userinfo.country if current_user.userinfo.country.present? %><br/>
-				<strong>Address:</strong> <%= current_user.userinfo.address if current_user.userinfo.address.present? %><br/>
-				<strong>Phone Number:</strong> <%= current_user.userinfo.phone if current_user.userinfo.phone.present? %><br/>
-				<strong>Zip Code:</strong> <%= current_user.userinfo.zipcode if current_user.userinfo.zipcode.present? %><br/>
-				<%= link_to userinfos_path do %>
-					<button class='btn btn-default' style='width:100px; margin:5px; font-weight:bold;'>Edit</button>
-				<% end %>
-			<% end %>
+			
 		</div>
 		<div class='col-md-6'>
-			<p style='width:100%; text-align:right; margin-top:20px; font-size:150%;'><strong>Total:</strong> <%= number_to_currency(all_total) %>$</p>
-			<%= link_to carts_path, style: 'float:right;' do %>
+			<p style='width:100%; text-align:right; margin-top:20px; font-size:150%;'><strong>Total:</strong> <%= number_to_currency(all_total) %></p>
+			<%= link_to url_for(@paypal_url), style: 'float:right;', method: 'post' do %>
 				<button class='btn btn-primary'>Continue To Checkout</button>
 			<% end %>
 		</div>
 	</div>
+<% elsif session[:carts].present? %>
+	<div class='container' style='width:100%; border:solid; border-width:1px; padding:15px; margin-top:20px;'>
+		<% session[:carts].each_with_index do |cart, index| %>
+			<div class='row'>
+				<div class="col-md-3 cart-column img" style='text-align:center;'>
+					<%= link_to Item.find(cart) do %>
+						<%= image_tag Item.find(cart).image.url(:small) %>
+					<% end %>
+				</div>
+				<div class="col-md-4 cart-column" style='display:table;'>
+					<p style='display:table-cell; vertical-align:middle; font-size:110%;'>
+						<strong>Item Name:</strong> <%= link_to Item.find(cart).name, Item.find(cart), style: 'text-decoration:none; color:black;' %><br/>
+						<strong>By:</strong> <%= link_to Item.find(cart).artist.name, Item.find(cart).artist, style: 'text-decoration:none; color:black;' %><br/>
+						<strong>Dimensions:</strong><br/>
+					</p>
+				</div>
+				<div class="col-md-3 cart-column" style='display:table;'>
+					<p style='display:table-cell; vertical-align:middle; font-size:110%;'>
+						<strong>Price:</strong> <%= number_to_currency(Item.find(cart).price) %><br/>
+						<strong>Shipping Cost:</strong> <%= number_to_currency(Item.find(cart).shipping) %><br/>
+						<% if Item.find(cart).quantity.present? %>
+							<strong>Available Quantity:</strong> <%= Item.find(cart).quantity %><br/>
+						<% end %>
+						<% total = Item.find(cart).price + Item.find(cart).shipping.to_i %>
+						<strong>Total:</strong> <%= number_to_currency(total) %>
+					</p>
+				</div>
+				<div class="col-md-2 cart-column" style='display:table; text-align:center;'>
+						<%= link_to carts_path(:delete_cart_item => index), style: 'display:table-cell; vertical-align:middle;' do %>
+							<button class='btn btn-default'>Remove</button>
+						<% end %>
+				</div>
+			</div>
+			<% if index != session[:carts].length-1 %>
+				<div style='height:1px; width:95%; border-bottom:dashed; border-width:1px; margin-top:10px; margin-bottom:10px; margin-left:auto; margin-right:auto;'>
+				</div>
+			<% end %>
+			<% all_total += Item.find(cart).price+Item.find(cart).shipping.to_i %>
+		<% end %>
+	</div>
+	<div class='row'>
+		<div class='col-md-6'>
+			
+		</div>
+		<div class='col-md-6'>
+			<% if session[:guest_user_id].present? %>
+				<p style='width:100%; text-align:right; margin-top:20px; font-size:150%;'><strong>Total:</strong> <%= number_to_currency(all_total) %></p>
+				<%= link_to url_for(@paypal_url), style: 'float:right;', method: 'post' do %>
+					<button class='btn btn-primary'>Guest Checkout</button>
+				<% end %>
+			<% else %>
+				<p style='width:100%; text-align:right; margin-top:20px; font-size:150%;'><strong>Total:</strong> <%= number_to_currency(all_total) %></p>
+					<button id='show-guest-email' class='btn btn-primary' style='float:right;'>Checkout</button>
+					<div id='guest-email' style='display:none; float:right;'>
+						<%= form_tag("/carts", style: 'text-align:center; padding:10px; border:solid; border-width:1px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;', action: 'index' ,method: 'post') do %>
+							<p style='text-align:center;'>Enter your email address and checkout as guest.</p>
+							<div class="form-group">
+								<%= email_field_tag :guest_email, nil, :placeholder => 'Email' , class: "form-control" %>
+							</div>
+							<%= submit_tag('CONFIRM EMAIL', class: 'btn btn-primary') %>
+						<% end %>
+						<p style='text-align:center; margin-top:10px; margin-bottom:5;'>- Or -</p>
+						<div style='text-align:center; padding:10px; border:solid; border-width:1px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;'>
+							<p style='text-align:center;'>Register and shop at Artiveria as registered user.</p>
+							<%= link_to new_user_session_path, style: "text-align:center; display:inline-block;" do %>
+								<button class='btn btn-primary'>SIGN IN</button>
+							<% end %>
+							<%= link_to new_user_registration_path, style: "text-align:center; display:inline-block;" do %>
+								<button class='btn btn-default'>SIGN UP</button>
+							<% end %>
+						</div>
+					</div>
+			<% end %>
+		</div>
+	</div>	
 <% else %>
 	<p style='margin-left:2%; margin-top:20px; font-size:120%;'>Your shopping cart is empty.</p>
 <% end %>
@@ -81,4 +144,11 @@
     $(".img").css("line-height", maxHeight+"px")
 };
 imagesLoaded( 'img', cartImagesLoaded);
+
+$(document).ready(function(){
+	$('#show-guest-email').on('click', function(){
+		$('#show-guest-email').hide();
+		$('#guest-email').show();
+	});
+});
 </script>

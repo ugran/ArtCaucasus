@@ -9,11 +9,11 @@ class ArtistsController < ApplicationController
     @q = Artist.search(params[:q])
     @alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     if params[:start].present?
-      @artists = Artist.all.select{ |a| a.name.start_with?(params[:start].capitalize)}.sort_by!{ |m| m.name.downcase }
+      @artists = Artist.all.select{ |a| a.name.start_with?(params[:start].capitalize)}.sort_by!{ |m| m.name.downcase }.paginate(:page => params[:page], :per_page => 21)
     elsif params[:q].present?
-      @artists = @q.result
+      @artists = @q.result.paginate(:page => params[:page], :per_page => 21)
     else
-      @artists = Artist.reorder('name ASC')
+      @artists = Artist.reorder('name ASC').paginate(:page => params[:page], :per_page => 21)
     end
     respond_with(@artists)
   end
@@ -58,6 +58,6 @@ class ArtistsController < ApplicationController
     end
 
     def artist_params
-      params.require(:artist).permit(:name, :description, :image, :specialization, :country, :manager, :phone_number, :secondary_phone_number, :email, :secondary_email )
+      params.require(:artist).permit(:name, :description, :rmore, :image, :specialization, :country, :manager, :phone_number, :secondary_phone_number, :email, :secondary_email )
     end
 end

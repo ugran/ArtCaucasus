@@ -8,6 +8,7 @@ class Item < ActiveRecord::Base
 	has_many :likes
 
 	belongs_to :artist
+	has_one :carousel
 
 	has_attached_file :image, :styles => { :small => '100' ,:medium => "300x300>", :large => "750x750>" }
 

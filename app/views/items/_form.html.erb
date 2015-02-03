@@ -18,22 +18,22 @@
 
   <div class="form-group">
     <%= f.label :description %><br>
-    <%= f.text_field :description, class: "form-control" %>
+    <%= f.text_area :description, class: "form-control" %>
   </div>
 
   <div class="form-group">
     <%= f.label :item_type %><br>
-    <%= f.select :item_type, [ 'Painting', 'Enamel'], class: "form-control" %>
+    <%= f.select :item_type, [ 'Painting', 'Enamel', 'Textile', 'Sculpture'], class: "form-control" %>
   </div>
 
   <div class='form-group'>
     <%= f.label :item_tag %><br>
-    <%= f.select :item_tag, [ 'Abstract', 'Modern','Landscape', 'Animals', 'Urban', 'Nature', 'Portrait', 'Ring', 'Necklace', 'Bracelet', 'Earring', 'Pin', 'Icon', 'Other' ], class: "form-control" %>
+    <%= f.select :item_tag, [ 'Abstract', 'Modern','Landscape', 'Animals', 'Urban', 'Nature', 'Portrait', 'Ring', 'Necklace', 'Bracelet', 'Earring', 'Pin', 'Icon', 'Felt', 'Batik', 'Other' ], class: "form-control" %>
   </div>
 
   <div class="form-group">
     <%= f.label :sold_out%><br>
-    <%= f.select :sold_out, [['No',0],['Yes',1],['Discounted',2]], class: "form-control" %>
+    <%= f.select :sold_out, [['No',0],['Yes',1]], class: "form-control" %>
   </div>
 
   <div class="form-group">
@@ -42,23 +42,18 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :height %><br>
-    <%= f.text_field :height, class: "form-control" %>
+    <%= f.label :dimensions %><br>
+    <%= f.text_field :dimensions, class: "form-control" %>
   </div>
 
   <div class="form-group">
-    <%= f.label :width %><br>
-    <%= f.text_field :width, class: "form-control" %>
+    <%= f.label :weight %><br>
+    <%= f.text_field :weight, class: "form-control" %>
   </div>
 
   <div class="form-group">
-    <%= f.label :width2 %><br>
-    <%= f.text_field :width2, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :shape %><br>
-    <%= f.select :shape, ['Square', 'Horizontal', 'Vertical'], class: "form-control" %>
+    <%= f.label :shipping %><br>
+    <%= f.text_field :shipping, class: "form-control" %>
   </div>
 
   <div class="form-group">

@@ -1,0 +1,19 @@
+<div style='text-align:center; margin-top:10px; font-weight:bold;'>
+	<%= image_tag(@carousel.image(:medium), style: 'width:800px;') %>
+</div>
+
+<div style='text-align:center; margin-top:10px; font-weight:bold;'>
+	<%= @carousel.headline %>
+</div>
+
+<div style='text-align:center; margin-top:10px; font-weight:bold;'>
+	<%= @carousel.description %>
+</div>
+
+<div style='text-align:center; margin-top:10px; font-weight:bold;'>
+	<%= @carousel.item_id %>-<%= @carousel.item.name %>
+</div>
+
+<div style='text-align:center; margin-top:10px;'>
+	<%= link_to 'back', carousels_path %>
+</div>

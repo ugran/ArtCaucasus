@@ -1,55 +1,53 @@
+
  <!-- Carousel
     ================================================== -->
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
       <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <% @carousels.each_with_index do |carousel, index| %>
+          <% if index == 0 %>
+            <li data-target="#myCarousel" data-slide-to="<%= index %>" class="active"></li>
+          <% else %>
+            <li data-target="#myCarousel" data-slide-to="<%= index %>"></li>
+          <% end %>
+        <% end %>
       </ol>
       <div class="carousel-inner" role="listbox">
-        <div class="item active">
-          <table id="wrapper">
-              <tr>
-                 <td><img src="<%= Item.find(1).image.url %>" alt="Second slide"></td>
-              </tr>
-           </table>
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>Example headline.</h1>
-              <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+        <% @carousels.each_with_index do |carousel, index| %>
+          <% if index == 0 %>
+            <div class="item active">
+              <table id="wrapper">
+                  <tr>
+                     <td><img src="<%= carousel.image(:medium) %>" alt="slide"></td>
+                  </tr>
+               </table>
+              <div class="container">
+                <div class="carousel-caption">
+                  <%= link_to item_path(carousel.item_id), style:'color:white; text-decoration:none;' do %>
+                    <h1><%= carousel.headline %></h1>
+                    <p><%= carousel.description.html_safe %></p>
+                  <% end %>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="item">
-          <table id="wrapper">
-              <tr>
-                 <td><img src="<%= Item.find(2).image.url %>" alt="Second slide"></td>
-              </tr>
-           </table>
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>Another example headline.</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+          <% else %>
+            <div class="item">
+              <table id="wrapper">
+                  <tr>
+                     <td><img src="<%= carousel.image(:medium) %>" alt="slide"></td>
+                  </tr>
+               </table>
+              <div class="container">
+                <div class="carousel-caption">
+                  <%= link_to item_path(carousel.item_id), style:'color:white; text-decoration:none;' do %>
+                    <h1><%= carousel.headline %></h1>
+                    <p><%= carousel.description.html_safe %></p>
+                  <% end %>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="item">
-          <table id="wrapper">
-              <tr>
-                 <td><img src="<%= Item.find(3).image.url %>" alt="Second slide"></td>
-              </tr>
-           </table>
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>One more for good measure.</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
-            </div>
-          </div>
-        </div>
+          <% end %>
+        <% end %>
       </div>
       <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -61,20 +59,26 @@
       </a>
     </div><!-- /.carousel -->
 
-    <div id="filters">
-      <div class='row'>
-        <div class='col-md-2 col-md-offset-2 tex-center'>
-        <%= search_form_for @q, url: root_path, html: { class: 'input-group', style: 'margin-top:10px;'} do |f| %>
-            <span class="input-group-btn">
-              <button type='submit;' class="btn btn-default" type="button" style='-webkit-border-top-right-radius: 0px;-webkit-border-bottom-right-radius: 0px;-moz-border-radius-topright: 0px;-moz-border-radius-bottomright: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px; border-right:none;'><i class="fa fa-search fa-lg"></i></button>
-            </span><%= f.search_field :name_or_artist_name_cont, placeholder: 'Search...', class: 'form-control', style: 'margin-left:-1px;' %>
-          <% end %>
+    <div class='container-fluid' style='background-color:white;'>
+        <div id='filters' class='row'>
+          <div class='col-md-2 col-md-offset-1 tex-center'>
+          <%= search_form_for @q, url: root_path, html: { class: 'input-group', style: 'margin-top:10px;'} do |f| %>
+              <span class="input-group-btn">
+                <button type='submit;' class="btn btn-default" type="button" style='-webkit-border-top-right-radius: 0px;-webkit-border-bottom-right-radius: 0px;-moz-border-radius-topright: 0px;-moz-border-radius-bottomright: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px; border-right:none;'><i class="fa fa-search fa-lg"></i></button>
+              </span><%= f.search_field :name_or_artist_name_cont, placeholder: 'Search...', class: 'form-control', style: 'margin-left:-1px;' %>
+            <% end %>
+          </div>
+          <div id='naxati' class='col-md-2' style="text-align:center; padding-top:15px; padding-bottom:15px;">
+            <%= link_to "Browse Paintings".upcase, paintings_path, style: 'text-decoration:none; font-weight:bold; font-size:120%; color:#444;' %>
+          </div>
+          <div id='minankari' class='col-md-2' style="text-align:center; padding-top:15px; padding-bottom:15px;">
+            <%= link_to "Browse Enamels".upcase, enamels_path, style: 'text-decoration:none; font-weight:bold; font-size:120%; color:#444;' %>
+          </div>
+          <div id='nacheri' class='col-md-2' style="text-align:center; padding-top:15px; padding-bottom:15px;">
+            <%= link_to "Browse Textiles".upcase, textiles_path, style: 'text-decoration:none; font-weight:bold; font-size:120%; color:#444;' %>
+          </div>
+          <div id='kandakeba' class='col-md-2' style="text-align:center; padding-top:15px; padding-bottom:15px;">
+            <%= link_to "Browse Sculptures".upcase, sculptures_path, style: 'text-decoration:none; font-weight:bold; font-size:120%; color:#444;' %>
+          </div>
         </div>
-        <div id='naxati' class='col-md-3' style="text-align:center; padding-top:15px; padding-bottom:15px;">
-          <%= link_to "Browse Paintings".upcase, paintings_path, style: 'text-decoration:none; font-weight:bold; font-size:130%; color:#444;' %>
-        </div>
-        <div id='minankari' class='col-md-3' style="text-align:center; padding-top:15px; padding-bottom:15px;">
-          <%= link_to "Browse Enamels".upcase, enamels_path, style: 'text-decoration:none; font-weight:bold; font-size:130%; color:#444;' %>
-        </div>
-      </div>
     </div>

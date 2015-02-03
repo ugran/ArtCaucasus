@@ -53,3 +53,39 @@
     </ul>
   </div>
 </div>
+
+---------------------------------------------
+<h3>Shipping information:</h3>
+<% unless current_user.userinfo.present? %>
+
+<% else %>
+  <strong>Name:</strong> <%= current_user.userinfo.firstname if current_user.userinfo.firstname.present? %> <%= current_user.userinfo.lastname if current_user.userinfo.lastname.present? %><br/>
+  <strong>Country:</strong> <%= current_user.userinfo.country if current_user.userinfo.country.present? %><br/>
+  <strong>Address:</strong> <%= current_user.userinfo.address if current_user.userinfo.address.present? %><br/>
+  <strong>Phone Number:</strong> <%= current_user.userinfo.phone if current_user.userinfo.phone.present? %><br/>
+  <strong>Zip Code:</strong> <%= current_user.userinfo.zipcode if current_user.userinfo.zipcode.present? %><br/>
+  <%= link_to userinfos_path do %>
+    <button class='btn btn-default' style='width:100px; margin:5px; font-weight:bold;'>Edit</button>
+  <% end %>
+<% end %>
+
+-----------------------------------------------
+
+
+<select id="artist">
+  <% Artist.all.each do |artist| %>
+    <option value='<%=artist.id%>'><%= artist.name %></option>
+  <% end %>
+</select>
+<button id='go'>Go</button>
+<br/>
+
+
+
+<script>
+$("#go").on('click',function(){
+  var e = document.getElementById("artist");
+  var selectedArtist = e.options[e.selectedIndex].value;
+  alert(selectedArtist);
+});
+</script>

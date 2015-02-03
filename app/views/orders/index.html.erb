@@ -1,0 +1,83 @@
+<% if user_signed_in? %>
+	<% if current_user.orders.present? %>
+		<div id="order-whole" style='margin-top:20px;'>
+			<% @orders.each do |order| %>
+				<% item_array = order.p_item_number.split('|').collect{ |s| s.to_i } %>
+				<div id='order-<%= order.id %>' style='width:100%; border:solid; border-width:1px; margin-bottom:10px;'>
+					<b>Order number: </b><%= order.p_invoice_number %><br/>
+					<% unless order.status.present? %>
+						<b>Status: </b> Default
+					<% else %>
+						<b>Status: </b> <%= order.status %>
+					<% end %>
+					<% if order.description.present? %>
+						<b>Description: </b> <%= order.description %>
+					<% end %>
+					<% if order.additional_info.present? %>
+						<b>Additional info: </b> <%= order.additional_info %>
+					<% end %>
+					<% if order.tracking_number.present? %>
+						<b>Tracking number: </b> <%= order.tracking_number %>
+					<% end %>
+					<b>Items: </b> 
+						<% item_array.each_with_index do |item_number, i| %>
+							<% if i==0%>
+								<%= link_to Item.find(item_number).name, Item.find(item_number) %>
+							<% else %>
+								" | "+<%= link_to Item.find(item_number).name, Item.find(item_number) %>
+							<% end %>
+						<% end %><br/>
+					<b>Price: </b> <%= order.p_gross_amount.to_i-order.p_shipping.to_i %>
+					<b>Shipping cost: </b> <%= order.shipping %>
+					<b>Total: </b> <%= order.p_gross_amount %>
+					<b>Phone: </b><%= order.p_contact_phone %>
+				</div>
+			<% end %>
+		</div>
+	<% else %>
+		<div id='order-whole' style='margin-top:20px;'>
+			<p>You have not ordered anything at artiveria.com yet.</p>
+		</div>
+	<% end %>
+<% elsif session[:guest_user_id].present? %>
+	<% if User.find_by(id: session[:guest_user_id]).orders.present? %>
+		<div id="order-whole" style='margin-top:20px;'>
+			<% @orders.each do |order| %>
+				<% item_array = order.p_item_number.split('|').collect{ |s| s.to_i } %>
+				<div id='order-<%= order.id %>' style='width:100%; border:solid; border-width:1px; margin-bottom:10px;'>
+					<b>Order number: </b><%= order.p_invoice_number %><br/>
+					<% unless order.status.present? %>
+						<b>Status: </b> Default
+					<% else %>
+						<b>Status: </b> <%= order.status %>
+					<% end %>
+					<% if order.description.present? %>
+						<b>Description: </b> <%= order.description %>
+					<% end %>
+					<% if order.additional_info.present? %>
+						<b>Additional info: </b> <%= order.additional_info %>
+					<% end %>
+					<% if order.tracking_number.present? %>
+						<b>Tracking number: </b> <%= order.tracking_number %>
+					<% end %>
+					<b>Items: </b> 
+						<% item_array.each_with_index do |item_number, i| %>
+							<% if i==0%>
+								<%= link_to Item.find(item_number).name, Item.find(item_number) %>
+							<% else %>
+								" | "+<%= link_to Item.find(item_number).name, Item.find(item_number) %>
+							<% end %>
+						<% end %><br/>
+					<b>Price: </b> <%= order.p_gross_amount.to_i-order.p_shipping.to_i %>
+					<b>Shipping cost: </b> <%= order.shipping %>
+					<b>Total: </b> <%= order.p_gross_amount %>
+					<b>Phone: </b><%= order.p_contact_phone %>
+				</div>
+			<% end %>
+		</div>
+	<% else %>
+		<div id='order-whole' style='margin-top:20px;'>
+			<p>You have not ordered anything at Artiveria yet.</p>
+		</div>
+	<% end %>
+<% end %>

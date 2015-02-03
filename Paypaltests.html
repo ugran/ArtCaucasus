@@ -1,0 +1,143 @@
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_xclick">
+<input type='hidden' name='bn' value="Artiveria_BuyNow_WPS_US">
+<input type="hidden" name="business" value="RRHU7J5BQCG4E">
+<input type="hidden" name="lc" value="GE">
+<input type="hidden" name="item_name" value="<%= item.name %>">ruby
+<input type="hidden" name="item_number" value="<%= item.id %>">ruby
+<input type="hidden" name="shipping" value="<%= shipping.price %>">ruby
+<input type="hidden" name="address_override" value="1">chven gadavawvdit mismarts da isini ver shecvlian
+<input type="hidden" name="custom" value="1">rasac minda gadavcem da mgoni ukan damibrunebs
+<input type="hidden" name="invoice" value="<%= invoice.number %>">shegvidzlia gadavawodot invoice-is nomeri
+<input type="hidden" name="paymentaction" value="authorization">pirdapir rom ar moachra da daelodo
+<input type="hidden" name="amount" value="<% total price %>">mtliani tanxa
+<input type="hidden" name="currency_code" value="USD">
+<input type="hidden" name="button_subtype" value="services">
+<input type="hidden" name="no_note" value="0">
+<input type="hidden" name="cn" value="Add special instructions to the seller:">
+<input type="hidden" name="no_shipping" value="2">
+<input type="hidden" name="rm" value="1">
+<input type="hidden" name="return" value="http://192.168.0.115:3000">
+<input type="hidden" name="cancel_return" value="http://192.168.0.115:3000">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+
+<a data-method="post" href="https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&amp;business=RRHU7J5BQCG4E&amp;bn=Artiveria_BuyNow_WPS_US&amp;address_override=1&amp;paymentaction=authorization&amp;no_note=1&amp;no_shipping=2&amp;rm=2&amp;return=http://artiveria.com/carts&amp;cancel_return=http://artiveria.com/carts&amp;item_name=Unknown | Wheat field with crows | Starry Night Over The Rhone&amp;item_number=6|5|1&amp;shipping=450&amp;custom=user-1&amp;invoice=N-4447761-20141223100858&amp;amount=270&amp;address1=8 McCullough dr.&amp;city=New Castle&amp;country=United states&amp;email=iraklikori@gmail.com&amp;first_name=Irakli&amp;last_name=Koridze&amp;state=DE&amp;zip=19720&amp;notify_url=http://artiveria.com/orders" rel="nofollow" style="float:right;">
+				<button class="btn btn-primary">Continue To Checkout</button>
+</a>
+
+
+
+
+
+
+---------------------------------------------------------------------------------------
+
+{"mc_gross"=>"200.00", "invoice"=>"N-8426777-20150117083627", "auth_exp"=>"05:58:03 Feb 16, 2015 PST", "protection_eligibility"=>"Eligible", "address_status"=>"confirmed", "payer_id"=>"E9FASE2TJ8UXQ", "tax"=>"0.00", "address_street"=>"8 McCullough dr.\r\nsuite 123", "payment_date"=>"05:58:03 Jan 17, 2015 PST", "payment_status"=>"Pending", "charset"=>"windows-1252", "address_zip"=>"19720", "first_name"=>"Test", "transaction_entity"=>"auth", "address_country_code"=>"US", "address_name"=>"Irakli Koridze", "notify_version"=>"3.8", "custom"=>"user-7", "payer_status"=>"verified", "business"=>"iraklikori-facilitator-1@gmail.com", "address_country"=>"United States", "address_city"=>"New Castle", "quantity"=>"1", "verify_sign"=>"AIkKNboJiyuxWLOHUlzTd3lpqCSxAfOzLV-HrRkpHCJAvnZjZydfRv.W", "payer_email"=>"iraklikori-buyer@gmail.com", "parent_txn_id"=>"", "txn_id"=>"4TB943313A3536448", "payment_type"=>"instant", "remaining_settle"=>"10", "auth_id"=>"4TB943313A3536448", "last_name"=>"Buyer", "address_state"=>"DE", "receiver_email"=>"iraklikori-facilitator-1@gmail.com", "auth_amount"=>"200.00", "receiver_id"=>"RRHU7J5BQCG4E", "pending_reason"=>"authorization", "txn_type"=>"web_accept", "item_name"=>"Starry Night Over The Rhone", "mc_currency"=>"USD", "item_number"=>"1", "residence_country"=>"US", "test_ipn"=>"1", "handling_amount"=>"0.00", "transaction_subject"=>"user-7", "payment_gross"=>"200.00", "auth_status"=>"Pending", "shipping"=>"150.00", "ipn_track_id"=>"21a86063d9af6"}
+
+
+
+"mc_gross"=>"200.00"
+	მთლიანი თანხა
+"invoice"=>"N-5015244-20150117082643"
+	ინვოისის ნომერი
+"auth_exp"=>"05:28:12 Feb 16, 2015 PST"
+	გადახდის აუთენთიკაციას როდის გასდის ვადა
+"protection_eligibility"=>"Eligible"
+	????
+"address_status"=>"unconfirmed"
+	მისამართის სტატუსი confirmed/unconfirmed
+"payer_id"=>"E9FASE2TJ8UXQ"
+	გადამხდელის paypal ID
+"tax"=>"0.00"
+	გადასახადები
+"address_street"=>"8 McCullough dr."
+	ქუჩის მისამართი
+"payment_date"=>"05:28:12 Jan 17, 2015 PST"
+	გადახდის თარიღი
+"payment_status"=>"Pending"
+	გადახდის სტატუსი
+"charset"=>"windows-1252"
+"address_zip"=>"19720"
+	ზიპ კოდი
+"first_name"=>"Test"
+	paypal-ზე სახელი
+"transaction_entity"=>"auth"
+	ტრანზაქციის სახე
+"address_country_code"=>"GE"
+	ქვეყნის კოდი
+"address_name"=>"Irakli Koridze"
+	მიმღების სახელი
+"notify_version"=>"3.8"
+"custom"=>"user-7"
+	რომელი user-ია
+"payer_status"=>"verified"
+"business"=>"iraklikori-facilitator-1@gmail.com"
+	ბიზნესი
+"address_country"=>"Georgia"
+	ქვეყანა
+"address_city"=>"New Castle"
+	ქალაქი
+"quantity"=>"1"
+"verify_sign"=>"AoIlwP.cbXyRSnpgjFfIYtfb677IAUtAAK05JIS5AZYgKItPH2fiQyip"
+"payer_email"=>"iraklikori-buyer@gmail.com"
+	გადამხდელის Email-ი
+"parent_txn_id"=>""
+"txn_id"=>"5EC8925378875715G"
+	ტრანზაქციის ID
+"payment_type"=>"instant"
+"remaining_settle"=>"10"
+	დამატებით რამდენის მოხსნა შეგვიძლია
+"auth_id"=>"5EC8925378875715G"
+"last_name"=>"Buyer"
+	Paypal-ზე გვარი
+"address_state"=>"DE"
+	შტატი
+"receiver_email"=>"iraklikori-facilitator-1@gmail.com"
+	მყიდველის paypal-ის მისამართი
+"auth_amount"=>"200.00"
+	მომავალი მოხსნის ოდენობა
+"receiver_id"=>"RRHU7J5BQCG4E"
+	მიმღების paypal-ის ID
+"pending_reason"=>"authorization"
+	დალოდების მიზეზი
+"txn_type"=>"web_accept"
+	ტრანზაქციის ტიპი
+"item_name"=>"Starry Night Over The Rhone"
+	ნივთის სახელი
+"mc_currency"=>"USD"
+	ვალუტა
+"item_number"=>"1"
+	რაოდენობა
+"residence_country"=>"US"
+
+"test_ipn"=>"1"
+"handling_amount"=>"0.00"
+"transaction_subject"=>"user-7"
+	იგივე რაც custom
+"payment_gross"=>"200.00"
+	მთლიანი თანხა
+"auth_status"=>"Pending"
+"shipping"=>"150.00"
+	შიფინგის ნაწილი
+"ipn_track_id"=>"8d084551e42c0"
+	IPN tacking ID
+
+	----------------------------------------------------
+
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_xclick">
+<input type="hidden" name="business" value="5STZ76A9S5PCQ">
+<input type="hidden" name="lc" value="US">
+<input type="hidden" name="button_subtype" value="services">
+<input type="hidden" name="no_note" value="0">
+<input type="hidden" name="cn" value="Add special instructions to the seller:">
+<input type="hidden" name="no_shipping" value="2">
+<input type="hidden" name="currency_code" value="USD">
+<input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>

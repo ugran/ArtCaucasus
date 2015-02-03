@@ -22,6 +22,11 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :rmore %><br>
+    <%= f.text_area :rmore, class: "form-control" %>    
+  </div>
+
+  <div class="form-group">
     <%= f.label :specialization %><br>
     <%= f.select :specialization, [ 'Painter', 'Sculptor', 'Photographer', 'Enamel'], class: "form-control" %>
   </div>

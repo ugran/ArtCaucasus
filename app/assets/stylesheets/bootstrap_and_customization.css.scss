@@ -5,6 +5,11 @@ $navbar-default-link-color: White;
 $navbar-default-link-hover-color: #bdc3c7;
 $navbar-default-bg: Black;
 $navbar-height: 60px;
+$pagination-active-color:white;
+$pagination-active-bg:black;
+$pagination-color:black;
+$pagination-active-border:black;
+$pagination-hover-color:black;
 
 @import "bootstrap-sprockets";
 @import 'bootstrap';
@@ -16,6 +21,7 @@ $navbar-height: 60px;
 #page-after-navbar{
     min-height:800px;
     background-color:white;
+    position:relative;
 }
 
 #footer {
@@ -23,16 +29,21 @@ $navbar-height: 60px;
     border-top-width:1px;
     border-top-color:#CCCCCC;
     background:black;
-    min-height:120px;
+    min-height:100px;
     width:100%;
     font-size:80%;
+    position:relative;
 }
 
 .footer-col {
     color:#E8E8E8;
-    margin-top:5px;
+    margin-top:0px;
     margin-bottom:5px;
     text-align:center;
+}
+
+.footer-col-in {
+    margin-bottom:5px;
 }
 
 .on-top-of-responsive {
@@ -62,7 +73,6 @@ $navbar-height: 60px;
 }
 
 #filters{
-	margin-bottom:40px;
 	border-bottom:solid;
 	border-bottom-width:1px;
     border-color:#B2B2B2;

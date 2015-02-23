@@ -6,6 +6,7 @@ class Item < ActiveRecord::Base
 	has_many :carts
 	has_many :comments
 	has_many :likes
+	has_many :pricerequests
 
 	belongs_to :artist
 	has_one :carousel

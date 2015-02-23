@@ -1,0 +1,31 @@
+<table class='table table-stripped' style='margin-top:30px;'>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Date</th>
+      <th>Invoice</th>
+      <th>Amount</th>
+      <th>Address</th>
+      <th>Name</th>
+      <th>Contact</th>
+      <th>Items</th>
+      <th>Edit</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.status %></td>
+        <td><%= order.p_payment_date %></td>
+        <td><%= order.p_invoice_number %></td>
+        <td><%= order.p_gross_amount %></td>
+        <td><%= order.p_country %>; <%= order.p_state %>; <%= order.p_city %>; <%= order.p_address_street %>; <%= order.p_zipcode %>.</td>
+        <td><%= order.p_shipping_name %></td>
+        <td><%= order.p_email %>; <%= order.p_contact_phone %>.</td>
+        <td><%= %></td>
+        <td>edit</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

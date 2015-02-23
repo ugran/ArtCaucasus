@@ -1,0 +1,54 @@
+<div id='loading' style='margin-left:auto; margin-right:auto; margin-top:20px; width:180px; height:130px; background-image:url("../assets/loading.gif"); background-repeat: no-repeat; background-position:-200px -150px;'>
+</div>
+
+<div id='show' style='display:none; margin-top:30px;'>
+<% if @itemIds.present? %>
+	<div id="container" style='margin-left:auto; margin-right:auto;'>
+	  <% @itemIds.each do |item| %>
+	    <div class='item' style='text-align:center; margin-right:20px; margin-left:20px; width:340px; margin-bottom:50px;'>
+	      <%= link_to Item.find(item) do %>
+	        <%= image_tag Item.find(item).image.url(:medium), style: "margin-right:auto; margin-left:auto;-webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);-moz-box-shadow:    7px 7px 5px 0px rgba(50, 50, 50, 0.75);box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75); margin-bottom:15px;" %>
+	      <% end %>
+	      <%= link_to Item.find(item).name.split.map(&:capitalize)*' ', Item.find(item), style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; font-weight:bold; display:block; margin-bottom:0px;" %>
+	      <%= link_to Item.find(item).artist.name.split.map(&:capitalize)*' ', Item.find(item).artist, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; margin-top:0px; display:block;" %>
+	      <% if Item.find(item).price.present? %><div class='price'><%= '$ '+Item.find(item).price.to_s %></div><% end %>
+	    </div>
+	  <% end %>
+	</div>
+
+	<div style='text-align:center;'>
+	   <%= will_paginate @itemIds, renderer: BootstrapPagination::Rails %>
+	</div>
+</div>
+<% else %>
+  <script>
+    var n = noty({
+      text: '<p style="width:100%; margin-top:15px; margin-bottom:15px; text-align:center; font-weight:bold; font-size:120%;">No such items found.</p>',
+      layout: 'topRight',
+      type: 'information',
+      animation: {
+        open: 'animated fadeInRight', // Animate.css class names
+        close: 'animated flipOutY', // Animate.css class names
+        speed: 500 // unavailable - no need
+      }
+    });
+    </script>
+<% end %>
+
+<script>
+var isotopeLaunch = function(){
+  var $container = $('#container');
+    // init
+
+    $container.isotope({
+      // options
+      itemSelector: '.item',
+      layoutMode: 'fitRows',
+    });
+};
+imagesLoaded( 'img', function(){
+  $('#loading').hide();
+  $('#show').show();
+  isotopeLaunch();
+});
+</script>

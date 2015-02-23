@@ -12,6 +12,7 @@ class ItemsController < ApplicationController
 
   def show
     @commentbuild = Comment.new
+    @pricerequestbuild = Pricerequest.new
     respond_with(@item, @itemimagebuild = Itemimage.new, @itemimages = @item.itemimages)
   end
 
@@ -44,6 +45,10 @@ class ItemsController < ApplicationController
   private
     def set_item
       @item = Item.find(params[:id])
+      @og_title = @item.name.split.map(&:capitalize)*' '+' '+'By '+@item.artist.name.split.map(&:capitalize)*' '
+      @og_description = @item.description
+      @og_image = @item.image.url(:large)
+      @og_price = @item.price.to_s
     end
 
     def admin_user

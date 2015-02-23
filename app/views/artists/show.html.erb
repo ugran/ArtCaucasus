@@ -33,8 +33,8 @@
       <%= link_to item do %>
         <%= image_tag item.image.url(:medium), style: "margin-right:auto; margin-left:auto;-webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);-moz-box-shadow:    7px 7px 5px 0px rgba(50, 50, 50, 0.75);box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75); margin-bottom:15px;" %>
       <% end %>
-      <%= link_to item.name.capitalize, item, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; font-weight:bold; display:block; margin-bottom:0px;" %>
-      <%= link_to item.artist.name.capitalize, item.artist, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; margin-top:0px; display:block;" %>
+      <%= link_to item.name.split.map(&:capitalize)*' ', item, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; font-weight:bold; display:block; margin-bottom:0px;" %>
+      <%= link_to item.artist.name.split.map(&:capitalize)*' ', item.artist, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; margin-top:0px; display:block;" %>
       <% if item.price.present? %><div class='price'><%= '$ '+item.price.to_s %></div><% end %>
     </div>
   <% end %>

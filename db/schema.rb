@@ -11,11 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150129071323) do
+ActiveRecord::Schema.define(version: 20150216090435) do
 
   create_table "artists", force: true do |t|
     t.string   "name"
     t.text     "description"
+    t.text     "rmore"
     t.string   "specialization"
     t.string   "country"
     t.string   "manager"
@@ -39,6 +40,8 @@ ActiveRecord::Schema.define(version: 20150129071323) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.integer  "textcolor",          default: 0
+    t.integer  "placerank",          default: 0
   end
 
   add_index "carousels", ["item_id"], name: "index_carousels_on_item_id"
@@ -92,6 +95,7 @@ ActiveRecord::Schema.define(version: 20150129071323) do
     t.string   "shipping"
     t.text     "additional_info"
     t.integer  "sold_out",           default: 0, null: false
+    t.integer  "promo",              default: 0, null: false
     t.integer  "price"
     t.integer  "discount",           default: 0, null: false
     t.integer  "quantity"
@@ -147,14 +151,24 @@ ActiveRecord::Schema.define(version: 20150129071323) do
     t.string   "p_contact_phone"
     t.text     "description"
     t.text     "additional_info"
-    t.integer  "item_price"
-    t.integer  "shipping_cost"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
   end
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id"
+
+  create_table "pricerequests", force: true do |t|
+    t.string   "email"
+    t.integer  "status"
+    t.integer  "item_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pricerequests", ["item_id"], name: "index_pricerequests_on_item_id"
+  add_index "pricerequests", ["user_id"], name: "index_pricerequests_on_user_id"
 
   create_table "userinfos", force: true do |t|
     t.string   "firstname"

@@ -37,7 +37,7 @@ class CartsController < ApplicationController
 
   def create
     if params[:guest_email].present?
-      create_guest_user(params[:guest_email])
+        create_guest_user(params[:guest_email])
     else
       total = 0
       authenticate_user!

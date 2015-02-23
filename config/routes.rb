@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :artists
+  resources :artists, :path => "Authors"
 
   resources :items
 
@@ -18,15 +18,22 @@ Rails.application.routes.draw do
 
   resources :carousels
 
+  resources :pricerequests
+
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
 	root "pages#home"
 	get "paintings" => "pages#paintings"
-	get "enamels" => "pages#enamels"
+	get "jewellery" => "pages#enamels", as: "enamels"
   get "textiles" => "pages#textiles"
   get "sculptures" => "pages#sculptures"
   get "channel" => "pages#channel"
   get "favorites" => "likes#index"
-  get "FAQ" => "pages#faq"
-  
+  get "AboutUs" => "pages#aboutus", as: "aboutus"
+  get "Contact" => "pages#contact", as: "contact"
+  get "MyFavorites" => "pages#favorites", as: "myfavorites"
+  get "ordermanagement" => "pages#ordermanagement"
+  get "requestmanagement" => "pages#requestmanagement"
+  get 'sitemap.xml' => 'pages#sitemap', :defaults => { :format => 'xml' }
+
 end

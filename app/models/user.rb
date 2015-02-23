@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :orders
   has_many :carts
   has_one :userinfo
+  has_many :pricerequests
   has_many :comments
   has_many :likes
 

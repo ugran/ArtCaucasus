@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Artiveria</title>
+  <title>Georgian Art at Artiveria.com</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <meta name='description' content='Aritveria.com is a joint venture of an American company Artiveria LLC and of its sister company Artiveria Ltd. based in Tbilisi, Georgia. Artiveria.com is the best place to buy Georgian Art from any place in the world.'>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <% if @og_title.present? %><meta property="og:title" content='<%= @og_title %>' /><% end %>
+  <meta property="og:site_name" content='Artiveria' />
+  <meta property='og:url' content='<%= request.original_url %>' />
+  <% if @og_description.present? %><meta property='og:description' content='<%= @og_description %>' /><% end %>
+  <meta property='fb:app_id' content='1396126384014923' />
+  <% if @og_image.present? %><meta property='og:image' content='<%= image_url @og_image %>' /><% end %>
+  <meta name="p:domain_verify" content="bd191a747b42f41b5eb0961d9fa7c916"/>
+  <% if @og_price.present? %>
+    <meta property='og:type' content='product' />
+    <meta property='og:price:amount' content='<%= @og_price %>' />
+    <meta property='og:price:currency' content='USD' />
+  <% end %>
 </head>
 <body>
 
@@ -31,7 +45,7 @@
   <% end %>
 
   <div id="page-after-navbar">
-    <div class="container">
+    <div class="container" style='min-height:700px;'>
       <div class='row'>
     	 <%= yield %>
     	</div>

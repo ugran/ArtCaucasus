@@ -1,15 +1,15 @@
-<div id='loading' style='width:100%; text-align:center;'>
-  <%= image_tag '/assets/loading.gif', style: 'margin-top:-150px;' %>
+<div id='loading' style='margin-left:auto; margin-right:auto; margin-top:20px; width:180px; height:130px; background-image:url("../assets/loading.gif"); background-repeat: no-repeat; background-position:-200px -150px;'>
 </div>
 
+<div id='show' style='display:none; margin-top:40px;'>
 <% if @items.present? %>
-  <div id="container" style='display:none; margin-left:auto; margin-right:auto;'>
+  <div id="container" style='margin-left:auto; margin-right:auto;'>
     <% @items.each do |item| %>
       <div class='item' style='text-align:center; margin-right:20px; margin-left:20px; width:340px; margin-bottom:50px;'>
         <%= link_to item do %>
           <%= image_tag item.image.url(:medium), style: "margin-right:auto; margin-left:auto;-webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);-moz-box-shadow:    7px 7px 5px 0px rgba(50, 50, 50, 0.75);box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75); margin-bottom:15px;" %>
         <% end %>
-        <%= link_to item.name.capitalize, item, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; font-weight:bold; display:block; margin-bottom:0px;" %>
+        <%= link_to item.name.split.map(&:capitalize)*' ', item, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; font-weight:bold; display:block; margin-bottom:0px;" %>
         <%= link_to item.artist.name.split.map(&:capitalize)*' ', item.artist, style: "text-decoration:none; color:#444; margin-left:auto; margin-right:auto; margin-top:0px; display:block;" %>
         <% if item.price.present? %><div class='price'><%= '$ '+item.price.to_s %></div><% end %>
       </div>
@@ -19,6 +19,7 @@
   <div style='text-align:center;'>
      <%= will_paginate @items, renderer: BootstrapPagination::Rails %>
   </div>
+</div>
 <% else %>
   <script>
     var n = noty({
@@ -47,34 +48,34 @@ var isotopeLaunch = function(){
 };
 imagesLoaded( 'img', function(){
   $('#loading').hide();
-  $('#container').show();
+  $('#show').show();
   isotopeLaunch();
 });
 
 $(document).ready(function(){
   $('#minankari').find('a').mouseenter(function(){
-    $(this).css("font-size", '130%');
+    $(this).css("font-size", '120%');
   });
   $('#minankari').find('a').mouseleave(function(){
-    $(this).css("font-size", "120%");
+    $(this).css("font-size", "110%");
   });
   $('#naxati').find('a').mouseenter(function(){
-    $(this).css("font-size", '130%');
+    $(this).css("font-size", '120%');
   });
   $('#naxati').find('a').mouseleave(function(){
-    $(this).css("font-size", "120%");
+    $(this).css("font-size", "110%");
   });
   $('#nacheri').find('a').mouseenter(function(){
-    $(this).css("font-size", '130%');
+    $(this).css("font-size", '120%');
   });
   $('#nacheri').find('a').mouseleave(function(){
-    $(this).css("font-size", "120%");
+    $(this).css("font-size", "110%");
   });
   $('#kandakeba').find('a').mouseenter(function(){
-    $(this).css("font-size", '130%');
+    $(this).css("font-size", '120%');
   });
   $('#kandakeba').find('a').mouseleave(function(){
-    $(this).css("font-size", "120%");
+    $(this).css("font-size", "110%");
   });
 });
 </script>

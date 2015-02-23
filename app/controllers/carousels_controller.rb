@@ -60,6 +60,6 @@ class CarouselsController < ApplicationController
     end
 
     def carousel_params
-      params.require(:carousel).permit(:headline, :description, :image, :item_id)
+      params.require(:carousel).permit(:headline, :description, :image, :item_id, :textcolor, :placerank)
     end
 end

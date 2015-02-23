@@ -26,6 +26,16 @@
     <%= f.file_field :image, class: "form-control" %>
   </div>
 
+   <div class="form-group">
+    <%= f.label :textcolor %>
+    <%= f.select :textcolor, [['White', 0], ['Black', 1]] %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :placerank %>
+    <%= f.select :placerank, [['No Rank', 0], 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] %>
+  </div>
+
   <div class="form-group">
     <%= f.select :item_id, options_from_collection_for_select(@items, "id", "name") %>
   </div>

@@ -5,7 +5,7 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  <meta name='description' content='Aritveria.com is a joint venture of an American company Artiveria LLC and of its sister company Artiveria Ltd. based in Tbilisi, Georgia. Artiveria.com is the best place to buy Georgian Art from any place in the world.'>
+  <meta name='description' content='Artiveria.com is an online gallery where you can buy Gerogian art online. We are a joint venture of an American company Artiveria LLC and of its sister company Artiveria Ltd. based in Tbilisi, Georgia. We ship worldwide.'>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <% if @og_title.present? %><meta property="og:title" content='<%= @og_title %>' /><% end %>
@@ -20,6 +20,7 @@
     <meta property='og:price:amount' content='<%= @og_price %>' />
     <meta property='og:price:currency' content='USD' />
   <% end %>
+  <%= favicon_link_tag 'Favicon.ico' %>
 </head>
 <body>
 

@@ -96,16 +96,28 @@
 				<div id='price-place'>
 					<p style='display:inline-block; font-size:150%; font-weight:bold; margin-bottom:0;'>Price:</p>
 					<p style='display:inline-block; font-size:150%; margin-left:10px; margin-bottom:0;'><%= number_to_currency(@item.price) %></p>
-					<p style='display:inline-block; font-size:150%; font-weight:bold; margin-left:3px; margin-bottom:0;'></p>
+					<i class="fa fa-question-circle fa-lg" style='display:inline; margin-left:5px; vertical-align:top;' data-toggle="tooltip" data-placement="top" title="Free Shipping."></i>
 					<% if @item.shipping.present? %>
 						<div style='margin:0; height:1px; width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px;'></div>
 						<p style='display:block; font-size:120%; margin-top:2px; margin-bottom:5px;'><strong>Shipping:</strong> <%= number_to_currency(@item.shipping) %></p>
 					<% end %>
 					<% if @item.quantity.present? %>
 						<div style='margin:0; height:1px; width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px;'></div>
-						<p style='display:block; font-size:120%; margin-top:2px; margin-bottom:5px;'><strong>Quantity:</strong> <%= @item.quantity %></p>
+						<p style='display:block; font-weight:bold; margin-top:2px; margin-bottom:5px;'><strong>Quantity:</strong> <%= @item.quantity %></p>
 					<% end %>
-					<div style='margin:0; height:1px; width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px; margin-top:5px;'></div>
+					<% if @item.price < 10000 %>
+						<div style='margin-bottom:5px;'>
+							<p style='display:inline-block; font-size:120%; font-weight:bold; margin-bottom:5px; vertical-align:top;'>Payment Option:</p>
+							<span style='display:inline-block; height:27px; width:101px; background-image:url("/assets/ppcom.svg"); background-size:contain; vertical-align:top; margin-left:5px;'> </span>
+							<div style='display:block; vertical-align:bottom;'>
+							<i class="fa fa-cc-visa fa-2x"></i>
+							<i class="fa fa-cc-mastercard fa-2x"></i>
+							<i class="fa fa-cc-amex fa-2x"></i>
+							<i class="fa fa-cc-discover fa-2x"></i>
+							<p style='display:inline; font-size:120%; vertical-align:top;'>(Debit or Credit Cards).</div>
+						</div>
+					<% end %>
+					<div style='margin:0; height:1px; width:100%; border-top:solid; border-color:#CCCCCC; border-width:1px; v-align:top;'></div>
 					<% unless (@item.price+@item.shipping.to_i) > 10000 %>
 						<% if user_signed_in? %>
 							<% unless current_user.carts.find_by(item_id: @item.id).present? %>
@@ -201,10 +213,12 @@
 						    });
 				  		</script>
 				<% end %>
-				<div style='width:100%; text-align:center;'>
+				<div style='width:100%; margin-top:10px; text-align:center;'>
+						<span style='display:inline;' class="fb-like" data-layout='button' data-colorscheme='dark' data-send="true" data-width="94" data-show-faces="true"></span>
+						<a href="https://twitter.com/share" class="twitter-share-button" data-via="ArtIveria" data-count="none" data-hashtags="Art">Tweet</a>
+							<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 						<a href="//www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" ><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
 							<script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>
-						<div class="fb-like" data-colorscheme='dark' data-send="true" data-width="280" data-show-faces="true" style='margin-top:10px;'></div>
 				</div>
 			</div>
 			<% if user_signed_in? && current_user.try(:admin?) %>
@@ -215,7 +229,7 @@
 </div>
 
 <% if @item.artist.items.where.not(id: @item.id).present? %>
-	<div style='width:100%; border-top:solid; border-top-color:#CCCCCC; border-top-width:1px; margin-bottom:10px; margin-top:20px;'></div>
+	<div style='width:100%; border-top:solid; border-top-color:#CCCCCC; border-top-width:1px; margin-bottom:10px; margin-top:10px;'></div>
 
 	<p style='margin-bottom:20px; font-size:150%; font-weight:bold; margin-left:25px; margin-right:25px;'>
 		More from <%= @item.artist.name %>:
@@ -286,6 +300,10 @@
 </div>
 
 <script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+
 var lensZoom = function(){
 	$("#<%= @item.name.gsub(/ /,'-') %>-image").imageLens({ imageSrc: "<%= @item.image.url %>" });
 	<% @item.itemimages.each_with_index do |image, index| %>

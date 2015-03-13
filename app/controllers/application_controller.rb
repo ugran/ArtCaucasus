@@ -49,7 +49,7 @@ private
       session[:guest_user_id] = u.id
       redirect_to carts_path, notice: 'Email saved. Now you can continue to checkout.'
     rescue
-      redirect_to :root, notice: 'We are sorry, a user is already registered with this email.'
+      redirect_to carts_path, notice: 'We are sorry, a user is already registered with this email.'
     end
   end
 

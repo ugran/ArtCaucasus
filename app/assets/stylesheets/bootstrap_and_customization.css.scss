@@ -18,6 +18,10 @@ $pagination-hover-color:black;
   text-align: center;
 }
 
+.fb-like > span {
+  vertical-align: baseline !important;
+}
+
 #page-after-navbar{
     min-height:800px;
     background-color:white;

@@ -1,6 +1,6 @@
 <div id='fixed-top'>
 <% unless @sort_by.present? %>
-	<ol class="breadcrumb" style='margin-bottom:0;'>
+	<ol class="breadcrumb" style='margin-bottom:0;-webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);-moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);'>
 	  <p style='display:inline-block; margin-bottom:0; margin-right:30px; font-weight:bold;'>PAINTING:</p>
 	  <li><%= link_to 'All', sculptures_path, style: 'font-weight:bold;' %></li>
 	  <li><%= link_to 'Sculpture', sculptures_path(:theme => 'Sculpture'), style: 'font-weight:bold;' %></li>
@@ -21,7 +21,7 @@
 	  </div>
 	</ol>
 <% else %>
-	<ol class="breadcrumb" style='margin-bottom:0;'>
+	<ol class="breadcrumb" style='margin-bottom:0;-webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);-moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);'>
 	  <p style='display:inline-block; margin-bottom:0; margin-right:30px; font-weight:bold;'>PAINTING:</p>
 	  <li><%= link_to 'All', sculptures_path, style: 'font-weight:bold;' %></li>
 	  <li><%= link_to 'Sculpture', sculptures_path(:theme => 'Sculpture', :sort_by => @sort_by), style: 'font-weight:bold;' %></li>

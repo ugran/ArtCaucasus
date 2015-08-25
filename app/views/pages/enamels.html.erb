@@ -1,6 +1,6 @@
 <div id='fixed-top'>
 <% unless @sort_by.present? %>
-  <ol class="breadcrumb" style='margin-bottom:0;'>
+  <ol class="breadcrumb" style='margin-bottom:0;-webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);-moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);'>
     <p style='display:inline-block; margin-bottom:0; margin-right:30px; font-weight:bold;'>JEWELLERY:</p>
     <li><%= link_to 'All', enamels_path, style: 'font-weight:bold;' %></li>
     <li><%= link_to 'Bracelet', enamels_path(:theme => 'Bracelet'), style: 'font-weight:bold;' %></li>
@@ -24,9 +24,13 @@
         <% end %>
       <% end %>
     </div>
+    <div data-toggle='modal' data-target='#enamel-hist' class='btn btn-default enamel-history' style='margin-top:10px;'>
+      <i style='display:inline-block;' class="fa fa-history"></i>
+      <p style='font-weight:bold; text-align:center; display:inline-block; margin:0;'>History Of Georgian Cloisonne Enamel</p>
+    </div>
   </ol>
 <% else %>
-  <ol class="breadcrumb" style='text-align:center; margin-bottom:0;'>
+  <ol class="breadcrumb" style='margin-bottom:0;-webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);-moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);'>
     <p style='display:inline-block; margin-bottom:0; margin-right:30px; font-weight:bold;'>JEWELLERY:</p>
     <li><%= link_to 'All', enamels_path, style: 'font-weight:bold;' %></li>
     <li><%= link_to 'Bracelet', enamels_path(:theme => 'Bracelet', :sort_by => @sort_by), style: 'font-weight:bold;' %></li>
@@ -50,6 +54,10 @@
         <% end %>
       <% end %>
     </div>
+    <div data-toggle='modal' data-target='#enamel-hist' class='btn btn-default enamel-history' style='margin-top:10px;'>
+      <i style='display:inline-block;' class="fa fa-history"></i>
+      <p style='font-weight:bold; text-align:center; display:inline-block; margin:0;'>History Of Georgian Cloisonne Enamel</p>
+    </div>
   </ol>
 <% end %>
 
@@ -63,6 +71,32 @@
 </div>
 
 <div id='loading' style='margin-left:auto; margin-right:auto; margin-top:20px; width:180px; height:130px; background-image:url("../assets/loading.gif"); background-repeat: no-repeat; background-position:-200px -150px;'>
+</div>
+
+<div class="modal fade" id="enamel-hist" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="margin-top:50px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel" style="font-weight:700; text-align:center;">History Of Georgian Cloisonne Enamel</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+          The art of enamel began in the ancient times. Its first works were found in Egypt and the island of Crete. Later it spread to Rome, Byzantium and even reached China and India through silk road.<br/><br/>
+          Enamel has a glossy image, which is formed on metal and is fastened to it in the kiln. The process of its fulfillment is extremely diverse and techniques are completely different, which allows an outcome of exciting effects. There were different examples of it in various countries and epochs. In medieval western Europe there was widely spread technique – cavity enamel: on a metal surface there were made holes and different paint colors, which contained loose glass, were placed in it. Afterwards it was burned in kiln – glass melted and had taken different colors of glossy spots.<br/><br/>
+          In Georgia, Byzantium and China there was used the most laborious and time consuming technique – cloisonné enamel. The <b>5 step process</b> requires:<br/><br/> <b> 1. Golden plate needs to be prepared and polished (nowadays silver and copper plates are also used). <br/>2. In areas where the line should be visible, gold thin strips are fastened to form partitions. <br/>3. In separate spaces, created by partitions, different colored powders are disposed. <br/>4. The product is burned in kiln, (Sometimes more than just once - different dyes require different annealing time and temperature); and <br/>5. Finally it is polished.<br/><br/>Such hard work requires in-depth knowledge, sophisticated devices and precious materials.</b><br/><br/>
+         The heritage of Georgian enamel masters is very significant. One of the earliest samples of medieval Georgian cloisonné enameling is Martvili triptych (encolpion), made in the 9th century. A scene of Deesis is represented by the figures of Christ, Mary and John the Precursor.<br/><br/>
+         Ancient Georgian cloisonné enamel samples - crosses, medallions, and icons are stored at the Georgian National Museum. Not only in the number of exhibits, but artistic merits of this collection is regarded as one the best exhibits of the world. According to experts, this collection is not less remarkable, than famous Venetian collection of enamels.<br/><br/>
+         Unfortunately, many Georgian masters’ masterpieces have been lost or destroyed over the centuries. Some also were found in foreign collections. For example, in XIX century Khakhuli unique icon - The Golden Triptych of Virgin Mary - the world’s biggest enamel, was stolen from Gelati Monastery. The golden triptych is enclosed with 115 small enamels, where in the center is the image of the Virgin Mary. After centuries The Golden Triptych of Virgin Mary has returned to Georgia and since 1952 is stored at treasury at the Georgian Museum of Arts. Unfortunately icon was returned to Georgia in a badly fragmented state, only the face and hands of the Virgin Mary have been preserved.<br/><br/>
+        The secret of creating of Georgian cloisonné enamel was lost for a long time. But today, this unique art is revived. 
+       Currently this field is very diverse and many wonderful works are created, some of which can be found at ArtIveria’s online art gallery. 
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id='show' style='display:none;'>
@@ -84,6 +118,7 @@
      <%= will_paginate @items, renderer: BootstrapPagination::Rails %>
   </div>
 </div>
+
 <% else %>
   <script>
     var n = noty({
